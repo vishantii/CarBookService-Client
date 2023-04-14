@@ -1,31 +1,31 @@
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
-import { useRouter } from 'next/router';
-import { JWTPayloadTypes, UserTypes } from '../../../services/data-types';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import jwtDecode from "jwt-decode";
+import { useRouter } from "next/router";
+import { JWTPayloadTypes, UserTypes } from "../../../services/data-types";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({
-    avatar: '',
+    avatar: "",
   });
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       const jwtToken = atob(token);
       const payload: JWTPayloadTypes = jwtDecode(jwtToken);
-      const userFromPayload: UserTypes = payload.player;
+      const userFromPayload: UserTypes = payload.customer;
       setIsLogin(true);
       setUser(userFromPayload);
     }
   }, []);
 
   const onLogout = () => {
-    Cookies.remove('token');
-    router.push('/');
+    Cookies.remove("token");
+    router.push("/");
     setIsLogin(false);
   };
 
@@ -51,13 +51,36 @@ export default function Auth() {
             />
           </a>
 
-          <ul className="dropdown-menu border-0" aria-labelledby="dropdownMenuLink">
-            <li><Link href="/member"><a className="dropdown-item text-lg color-palette-2">My Profile</a></Link></li>
-            <li><Link href="/"><a className="dropdown-item text-lg color-palette-2" href="#">Wallet</a></Link></li>
+          <ul
+            className="dropdown-menu border-0"
+            aria-labelledby="dropdownMenuLink"
+          >
             <li>
-              <Link href="/member/edit-profile"><a className="dropdown-item text-lg color-palette-2" href="#">Account Settings</a></Link>
+              <Link href="/member">
+                <a className="dropdown-item text-lg color-palette-2">
+                  My Profile
+                </a>
+              </Link>
             </li>
-            <li onClick={onLogout}><a className="dropdown-item text-lg color-palette-2" href="#">Log Out</a></li>
+            <li>
+              <Link href="/">
+                <a className="dropdown-item text-lg color-palette-2" href="#">
+                  Wallet
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/member/edit-profile">
+                <a className="dropdown-item text-lg color-palette-2" href="#">
+                  Account Settings
+                </a>
+              </Link>
+            </li>
+            <li onClick={onLogout}>
+              <a className="dropdown-item text-lg color-palette-2" href="#">
+                Log Out
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -74,6 +97,5 @@ export default function Auth() {
         </a>
       </Link>
     </li>
-
   );
 }

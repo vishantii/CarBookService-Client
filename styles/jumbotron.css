@@ -1,0 +1,32 @@
+.jumbotron {
+  padding: 2rem 1rem;
+}
+.btn-repair {
+  background-color: #12bbf0;
+  color: #ffffff;
+  padding: 0.8rem 2rem;
+  border-radius: 33px;
+  font-weight: 600;
+}
+
+.title-repair {
+  font-weight: 500;
+}
+.banner-landing {
+  border-radius: 1rem;
+}
+.step-card {
+  box-shadow: 7px 5px 18px -1px rgba(0, 0, 0, 0.37);
+  -webkit-box-shadow: 7px 5px 18px -1px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 7px 5px 18px -1px rgba(0, 0, 0, 0.37);
+}
+.services-card {
+  border-width: 0.1rem;
+  border-color: black;
+  border-style: solid;
+  border-radius: 1rem;
+}
+
+.contact {
+  font-weight: 600;
+}

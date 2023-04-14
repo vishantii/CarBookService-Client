@@ -1,7 +1,7 @@
-import jwtDecode from 'jwt-decode';
-import SideBar from '../../components/organisms/SideBar';
-import OverviewContent from '../../components/organisms/OverviewContent';
-import { JWTPayloadTypes, UserTypes } from '../../services/data-types';
+import jwtDecode from "jwt-decode";
+import SideBar from "../../components/organisms/SideBar";
+import OverviewContent from "../../components/organisms/OverviewContent";
+import { JWTPayloadTypes, UserTypes } from "../../services/data-types";
 
 export default function Member() {
   return (
@@ -16,8 +16,8 @@ interface GetServerSideProps {
   req: {
     cookies: {
       token: string;
-    }
-  }
+    };
+  };
 }
 
 export async function getServerSideProps({ req }: GetServerSideProps) {
@@ -25,15 +25,15 @@ export async function getServerSideProps({ req }: GetServerSideProps) {
   if (!token) {
     return {
       redirect: {
-        destination: '/sign-in',
+        destination: "/sign-in",
         permanent: false,
       },
     };
   }
 
-  const jwtToken = Buffer.from(token, 'base64').toString('ascii');
+  const jwtToken = Buffer.from(token, "base64").toString("ascii");
   const payload: JWTPayloadTypes = jwtDecode(jwtToken);
-  const userFromPayload: UserTypes = payload.player;
+  const userFromPayload: UserTypes = payload.customer;
   const IMG = process.env.NEXT_PUBLIC_IMG;
   userFromPayload.avatar = `${IMG}/${userFromPayload.avatar}`;
   return {

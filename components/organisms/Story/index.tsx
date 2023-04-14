@@ -1,35 +1,38 @@
-export default function Story() {
-  return (
-    <section className="story pt-50 pb-50">
-      <div className="container-xxl container-fluid">
-        <div className="row align-items-center px-lg-5 mx-auto gap-lg-0 gap-4">
-          <div className="col-lg-7 col-12 d-lg-flex d-none justify-content-lg-end pe-lg-60" data-aos="zoom-in">
-            <img src="/img/Header-9.png" width="612" height="452" className="img-fluid" alt="" />
-          </div>
-          <div className="col-lg-5 col-12 ps-lg-60">
-            <div className="">
-              <h2 className="text-4xl fw-bold color-palette-1 mb-30">
-                Win the battle.
-                <br />
-                {' '}
-                Be the Champion.
-              </h2>
-              <p className="text-lg color-palette-1 mb-30">
-                Kami menyediakan jutaan cara untuk
-                <br
-                  className="d-sm-block d-none"
-                />
-                membantu players menjadi
-                <br className="d-sm-block d-none" />
-                {' '}
-                pemenang sejati
+import Image from "next/dist/client/image";
 
-              </p>
-              <div className="d-md-block d-flex flex-column w-100">
-                <a className="btn btn-read text-lg rounded-pill" href="#" role="button">Read Story</a>
-              </div>
-            </div>
-          </div>
+export default function Story() {
+  const renderCard = (
+    title: String,
+    icon: String,
+    width: number,
+    height: number
+  ) => {
+    return (
+      <div className="col-lg-4 text-center">
+        <div className=" feature-card border-0 step-card">
+          <Image
+            src={`/icon/${icon}.png`}
+            alt="icon step"
+            className="mb-30"
+            width={width}
+            height={height}
+          />
+          <p className="fw-semibold text-2xl mt-3 color-palette-1">{title}</p>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <section id="feature" className="feature pt-50 pb-50">
+      <div className="container-fluid">
+        <h2 className="text-4xl fw-bold color-palette-1 text-center mb-30">
+          Our Services
+        </h2>
+        <div className="row gap-lg-0 gap-4" data-aos="fade-up">
+          {renderCard("General Services", "services1", 100, 90)}
+          {renderCard("Denting & Painting Services", "services2", 100, 90)}
+          {renderCard("Major Services", "services3", 100, 90)}
         </div>
       </div>
     </section>

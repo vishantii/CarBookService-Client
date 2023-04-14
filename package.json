@@ -1,5 +1,5 @@
 {
-  "name": "storegg",
+  "name": "thesisapp",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,8 +15,11 @@
     "classnames": "^2.3.1",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "next": "10.2.3",
     "react": "17.0.2",
+    "react-datepicker": "^4.11.0",
     "react-dom": "17.0.2",
     "react-number-format": "^4.6.3",
     "react-toastify": "^7.0.4"

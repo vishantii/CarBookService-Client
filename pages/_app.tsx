@@ -1,23 +1,24 @@
-import '../styles/utilities.css';
-import '../styles/homepage.css';
-import '../styles/detail.css';
-import '../styles/checkout.css';
-import '../styles/complete-checkout.css';
-import '../styles/sign-in.css';
-import '../styles/sign-up.css';
-import '../styles/sign-up-photo.css';
-import '../styles/sign-up-success.css';
-import '../styles/404-not-found.css';
-import '../styles/sidebar.css';
-import '../styles/overview.css';
-import '../styles/transactions.css';
-import '../styles/transactions-detail.css';
-import '../styles/edit-profile.css';
-import '../styles/navbar-log-in.css';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import "../styles/utilities.css";
+import "../styles/homepage.css";
+import "../styles/detail.css";
+import "../styles/jumbotron.css";
+import "../styles/checkout.css";
+import "../styles/complete-checkout.css";
+import "../styles/sign-in.css";
+import "../styles/sign-up.css";
+import "../styles/sign-up-photo.css";
+import "../styles/sign-up-success.css";
+import "../styles/404-not-found.css";
+import "../styles/sidebar.css";
+import "../styles/overview.css";
+import "../styles/transactions.css";
+import "../styles/transactions-detail.css";
+import "../styles/edit-profile.css";
+import "../styles/navbar-log-in.css";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -38,7 +39,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
 
         {/* AOS Animation */}
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+        <link
+          href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+          rel="stylesheet"
+        />
 
         {/* Call Bootstrap JS */}
         <script

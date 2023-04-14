@@ -1,12 +1,12 @@
-import jwtDecode from 'jwt-decode';
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
-import SideBar from '../../components/organisms/SideBar';
-import Input from '../../components/atoms/Input';
-import { JWTPayloadTypes, UserTypes } from '../../services/data-types';
-import { updateProfile } from '../../services/member';
+import jwtDecode from "jwt-decode";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import SideBar from "../../components/organisms/SideBar";
+import Input from "../../components/atoms/Input";
+import { JWTPayloadTypes, UserTypes } from "../../services/data-types";
+import { updateProfile } from "../../services/member";
 
 interface UserStateTypes {
   id: string;
@@ -17,20 +17,20 @@ interface UserStateTypes {
 
 export default function EditProfile() {
   const [user, setUser] = useState<UserStateTypes>({
-    id: '',
-    name: '',
-    email: '',
-    avatar: '',
+    id: "",
+    name: "",
+    email: "",
+    avatar: "",
   });
-  const [imagePreview, setImagePreview] = useState('/');
+  const [imagePreview, setImagePreview] = useState("/");
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       const jwtToken = atob(token);
       const payload: JWTPayloadTypes = jwtDecode(jwtToken);
-      const userFromPayload: UserTypes = payload.player;
+      const userFromPayload: UserTypes = payload.customer;
       setUser(userFromPayload);
     }
   }, []);
@@ -38,14 +38,14 @@ export default function EditProfile() {
   const onSubmit = async () => {
     const data = new FormData();
 
-    data.append('image', user.avatar);
-    data.append('name', user.name);
+    data.append("image", user.avatar);
+    data.append("name", user.name);
     const response = await updateProfile(data, user.id);
     if (response.error) {
       toast.error(response.message);
     } else {
-      Cookies.remove('token');
-      router.push('/sign-in');
+      Cookies.remove("token");
+      router.push("/sign-in");
     }
   };
   return (
@@ -59,10 +59,22 @@ export default function EditProfile() {
               <div className="photo d-flex">
                 <div className="image-upload">
                   <label htmlFor="avatar">
-                    {imagePreview === '/' ? (
-                      <img src={user.avatar} alt="icon upload" width={90} height={90} style={{ borderRadius: '100%' }} />
+                    {imagePreview === "/" ? (
+                      <img
+                        src={user.avatar}
+                        alt="icon upload"
+                        width={90}
+                        height={90}
+                        style={{ borderRadius: "100%" }}
+                      />
                     ) : (
-                      <img src={imagePreview} alt="icon upload" width={90} height={90} style={{ borderRadius: '100%' }} />
+                      <img
+                        src={imagePreview}
+                        alt="icon upload"
+                        width={90}
+                        height={90}
+                        style={{ borderRadius: "100%" }}
+                      />
                     )}
                   </label>
                   <input
@@ -85,10 +97,12 @@ export default function EditProfile() {
                 <Input
                   label="Full Name"
                   value={user.name}
-                  onChange={(event) => setUser({
-                    ...user,
-                    name: event.target.value,
-                  })}
+                  onChange={(event) =>
+                    setUser({
+                      ...user,
+                      name: event.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="pt-30">
@@ -107,9 +121,7 @@ export default function EditProfile() {
                 </button>
               </div>
             </form>
-
           </div>
-
         </div>
       </main>
     </section>
