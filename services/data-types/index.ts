@@ -1,6 +1,7 @@
 export interface CategoryTypes {
   _id: string;
   name: string;
+  price: string;
   __v: number;
 }
 
@@ -51,12 +52,19 @@ export interface JWTPayloadTypes {
 }
 
 export interface CheckoutTypes {
-  voucher: string;
-  nominal: string;
-  payment: string;
-  bank: string;
-  name: string;
-  accountUser: string;
+  carBrand: string;
+  carType: string;
+  carYear: string;
+  category: {
+    id: String;
+    name: String;
+    price: String;
+  };
+  chooseDate: string;
+  licensePlate: string;
+  miles: string;
+  notes: string;
+  chooseTime: string;
 }
 
 export interface HistoryVoucherTopupTypes {
@@ -77,17 +85,30 @@ export interface HistoryPaymentTypes {
 
 export interface HistoryTransactionTypes {
   _id: string;
-  historyVoucherTopup: HistoryVoucherTopupTypes;
-  value: number;
-  status: string;
-  accountUser: string;
-  tax: number;
-  name: string;
-  historyPayment: HistoryPaymentTypes;
+  carBrand: string;
+  carType: string;
+  carYear: string;
+  category: {
+    id: string;
+    name: string;
+    price: string | any;
+  };
+  chooseDate: string;
+  licensePlate: string;
+  miles: string;
+  notes: string;
+  chooseTime: string;
+  status: Number;
+  bookingNumber: Number;
 }
 
 export interface TopUpCategoriesTypes {
   _id: string;
   value: number;
   name: string;
+}
+
+export interface TimeDataUpdateTypes {
+  date: string;
+  time: string;
 }

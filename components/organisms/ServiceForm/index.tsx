@@ -2,12 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
-import { getServiceCategory, getServiceTime } from "../../../services/player";
+import {
+  getCategoryById,
+  getServiceCategory,
+  getServiceTime,
+} from "../../../services/player";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
+import { Rupiah } from "../../../Helpers/convertnumber";
 
 export default function ServiceForm() {
   const [carBrand, setCarBrand] = useState("");
@@ -19,7 +24,8 @@ export default function ServiceForm() {
   const [time, setTime] = useState([]);
   const [times, setTimes] = useState("");
   const [notes, setNotes] = useState("");
-  const [catService, setCatService] = useState("");
+  const [catById, setCatById] = useState({});
+  const [catService, setCatService] = useState([]);
   const [categories, setCategories] = useState([]);
   const timeCheck = _.isEmpty(time);
 
@@ -32,6 +38,7 @@ export default function ServiceForm() {
     const data = await getServiceCategory();
 
     setCategories(data);
+    setCatService(data[0].price);
   }, [getServiceCategory]);
 
   const onChangeDate = async (dates: any) => {
@@ -44,21 +51,23 @@ export default function ServiceForm() {
     });
   };
 
+  const onSelectCategory = async (value: any) => {
+    await getCategoryById({ id: value }).then((res: any) => {
+      res.data.map((item: any) =>
+        setCatById({
+          id: item._id,
+          name: item.name,
+          price: item.price,
+        })
+      );
+    });
+  };
+
   useEffect(() => {
     getServiceCategoryAPI();
   }, []);
 
   const onSubmit = () => {
-    // const data = new FormData();
-    // data.append("carBrand", carBrand);
-    // data.append("carType", carType);
-    // data.append("carYear", carYear);
-    // data.append("miles", miles);
-    // data.append("time", times);
-    // data.append("licensePlate", licensePlate);
-    // data.append("date", startDate);
-    // data.append("category", catService);
-    // data.append("notes", notes);
     const date = moment(startDate).format("YYYY-MM-DD");
     const userForm = {
       carBrand,
@@ -69,13 +78,13 @@ export default function ServiceForm() {
       date,
       times,
       notes,
-      catService,
+      catById,
     };
 
     localStorage.setItem("service-form", JSON.stringify(userForm));
-    console.log("userForm-->", userForm);
     router.push("/checkout");
   };
+
   return (
     <>
       <h2 className="text-4xl fw-bold color-palette-1 mb-10">Service Form</h2>
@@ -137,22 +146,25 @@ export default function ServiceForm() {
         <select
           id="category"
           name="category"
-          className="form-select rounded-pill text-lg p-3"
+          className="form-select rounded-pill text-lg p-3 category-select"
           aria-label="Service Category"
-          value={catService}
-          onChange={(event) => setCatService(event.target.value)}
+          placeholder="Pilih Kategori Servis"
+          onChange={(event) => onSelectCategory(event.target.value)}
         >
-          {categories.map((category: CategoryTypes) => (
-            <option key={category._id} value={category._id} selected>
-              {category.name}
-            </option>
-          ))}
+          {categories.map((category: CategoryTypes) => {
+            return (
+              <option key={category._id} value={category._id} selected>
+                {category.name} - {Rupiah(parseInt(category.price))}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div className="pt-30">
         <label className={className.label}>Pilih Tanggal Service</label>
         <DatePicker
           minDate={moment().toDate()}
+          placeholderText="Pilih Tanggal"
           className="form-select rounded-pill text-lg"
           selected={startDate}
           onChange={(date: any) => {
@@ -168,13 +180,13 @@ export default function ServiceForm() {
           <select
             id="time"
             name="time"
-            className="form-select rounded-pill text-lg p-3"
-            aria-label="Service Time"
+            placeholder="Pilih Jam"
+            className="form-select rounded-pill text-lg p-3 category-select"
             value={times}
             onChange={(event) => setTimes(event.target.value)}
           >
             {time.map((times: any) => (
-              <option key={times._id} value={times._id} selected>
+              <option key={times._id} value={times.time} selected>
                 {times.available ? times.time : null}
               </option>
             ))}
@@ -186,7 +198,7 @@ export default function ServiceForm() {
         <textarea
           rows={5}
           cols={100}
-          className="form-control text-lg"
+          className="form-control text-lg category-select"
           placeholder="Your Notes to Mechanic"
           value={notes}
           onChange={(event) => setNotes(event.target.value)}

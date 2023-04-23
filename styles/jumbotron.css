@@ -30,3 +30,8 @@
 .contact {
   font-weight: 600;
 }
+
+.category-select {
+  border-width: 0.1 rem;
+  border-color: #0c145a;
+}

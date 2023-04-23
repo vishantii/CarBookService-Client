@@ -1,50 +1,70 @@
-import callAPI from '../config/api';
+import callAPI from "../config/api";
 
 const ROOT_API = process.env.NEXT_PUBLIC_API;
-const API_VERSION = 'api/v1';
+const API_VERSION = "api/v1";
 
 export async function getMemberOverview() {
-  const url = `${ROOT_API}/${API_VERSION}/players/dashboard`;
+  const url = `${ROOT_API}/${API_VERSION}/customers/dashboard`;
 
   return callAPI({
     url,
-    method: 'GET',
+    method: "GET",
     token: true,
   });
 }
 
-export async function getMemberTransactions(valueParams: string) {
-  let params = '';
-  if (valueParams === 'all') {
-    params = '';
-  } else {
-    params = `?status=${valueParams}`;
-  }
-  const url = `${ROOT_API}/${API_VERSION}/players/history${params}`;
+export async function getMemberTransactions() {
+  // let params = "";
+  // if (valueParams === "all") {
+  //   params = "";
+  // } else {
+  //   params = `?status=${valueParams}`;
+  // }
+  const url = `${ROOT_API}/${API_VERSION}/customers/history`;
 
   return callAPI({
     url,
-    method: 'GET',
+    method: "GET",
     token: true,
   });
 }
 
 export async function getTransactionDetail(id: string, token: string) {
-  const url = `${ROOT_API}/${API_VERSION}/players/history/${id}/detail`;
+  const url = `${ROOT_API}/${API_VERSION}/customers/history/${id}/detail`;
 
   return callAPI({
     url,
-    method: 'GET',
+    method: "GET",
     serverToken: token,
   });
 }
 
 export async function updateProfile(data: FormData, id: string) {
-  const url = `${ROOT_API}/${API_VERSION}/players/profile/${id}`;
+  const url = `${ROOT_API}/${API_VERSION}/customers/profile/${id}`;
 
   return callAPI({
     url,
-    method: 'PUT',
+    method: "PUT",
+    data,
+    token: true,
+  });
+}
+export async function updateStatusTransaction(data: FormData, id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/customers/transactions/${id}`;
+
+  return callAPI({
+    url,
+    method: "PUT",
+    data,
+    token: true,
+  });
+}
+export async function cancelTransaction(data: FormData) {
+  const url = `${ROOT_API}/${API_VERSION}/customers/delete`;
+
+  return callAPI({
+    url,
+    method: "POST",
     data,
     token: true,
   });

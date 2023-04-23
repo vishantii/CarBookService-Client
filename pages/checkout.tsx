@@ -1,7 +1,6 @@
-import Image from 'next/image';
-import CheckoutConfirmation from '../components/organisms/CheckoutConfirmation';
-import CheckoutDetail from '../components/organisms/CheckoutDetail';
-import CheckoutItem from '../components/organisms/CheckoutItem';
+import Image from "next/image";
+import CheckoutConfirmation from "../components/organisms/CheckoutConfirmation";
+import CheckoutDetail from "../components/organisms/CheckoutDetail";
 
 export default function Checkout() {
   return (
@@ -14,9 +13,10 @@ export default function Checkout() {
         </div>
         <div className="title-text pt-md-50 pt-0">
           <h2 className="text-4xl fw-bold color-palette-1 mb-10">Checkout</h2>
-          <p className="text-lg color-palette-1 mb-0">Waktunya meningkatkan cara bermain</p>
+          <p className="text-lg color-palette-1 mb-0">
+            Konfirmasi Service Checkout
+          </p>
         </div>
-        <CheckoutItem />
         <hr />
         <CheckoutDetail />
         <CheckoutConfirmation />
@@ -29,8 +29,8 @@ interface GetServerSideProps {
   req: {
     cookies: {
       token: string;
-    }
-  }
+    };
+  };
 }
 
 export async function getServerSideProps({ req }: GetServerSideProps) {
@@ -38,7 +38,7 @@ export async function getServerSideProps({ req }: GetServerSideProps) {
   if (!token) {
     return {
       redirect: {
-        destination: '/sign-in',
+        destination: "/sign-in",
         permanent: false,
       },
     };

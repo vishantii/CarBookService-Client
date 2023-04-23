@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { useEffect } from 'react';
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function CompleteCheckout() {
   // [CODE UPDATE] remove localStorage transaction
   useEffect(() => {
-    localStorage.removeItem('data-item');
-    localStorage.removeItem('data-topup');
+    localStorage.removeItem("data-item");
+    localStorage.removeItem("data-topup");
   }, []);
   return (
     <section className="complete-checkout mx-auto pt-lg-145 pb-lg-145 pt-100 pb-80">
@@ -57,10 +57,22 @@ export default function CompleteCheckout() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <path d="M254.212 33.9492H185.98V111.44H254.212V33.9492Z" fill="#B4C2D1" />
-              <path d="M254.212 33.9492H208.553V111.44H254.212V33.9492Z" fill="url(#paint0_linear)" />
-              <path d="M195.283 16.981H90.5659V135.849H195.283V16.981Z" fill="url(#paint1_linear)" />
-              <path d="M195.283 16.981H124.528V135.849H195.283V16.981Z" fill="url(#paint2_linear)" />
+              <path
+                d="M254.212 33.9492H185.98V111.44H254.212V33.9492Z"
+                fill="#B4C2D1"
+              />
+              <path
+                d="M254.212 33.9492H208.553V111.44H254.212V33.9492Z"
+                fill="url(#paint0_linear)"
+              />
+              <path
+                d="M195.283 16.981H90.5659V135.849H195.283V16.981Z"
+                fill="url(#paint1_linear)"
+              />
+              <path
+                d="M195.283 16.981H124.528V135.849H195.283V16.981Z"
+                fill="url(#paint2_linear)"
+              />
               <path
                 d="M12.5775 187.897C16.1686 187.897 18.7337 185.314 18.7337 181.698C18.7337 178.082 16.1686 175.499 12.5775 175.499C8.98626 175.499 6.42114 178.082 6.42114 181.698C6.42114 185.314 9.49928 187.897 12.5775 187.897Z"
                 fill="url(#paint3_linear)"
@@ -73,10 +85,22 @@ export default function CompleteCheckout() {
                 d="M338.349 90.2587C340.401 90.2587 342.453 88.1924 342.453 86.1261C342.453 84.0595 340.401 81.9932 338.349 81.9932C336.297 81.9932 334.245 84.0595 334.245 86.1261C334.245 88.1924 336.297 90.2587 338.349 90.2587Z"
                 fill="url(#paint5_linear)"
               />
-              <path d="M285.506 49.9639H44.3849V291.733H285.506V49.9639Z" fill="white" />
-              <path d="M286.019 49.9639H111.591V291.733H286.019V49.9639Z" fill="#E6ECF5" />
-              <path d="M77.7316 49.9639H44.3849V291.733H77.7316V49.9639Z" fill="url(#paint6_linear)" />
-              <path d="M111.591 291.733H44.3849V291.218L78.2447 257.639L111.591 291.733Z" fill="#E6ECF5" />
+              <path
+                d="M285.506 49.9639H44.3849V291.733H285.506V49.9639Z"
+                fill="white"
+              />
+              <path
+                d="M286.019 49.9639H111.591V291.733H286.019V49.9639Z"
+                fill="#E6ECF5"
+              />
+              <path
+                d="M77.7316 49.9639H44.3849V291.733H77.7316V49.9639Z"
+                fill="url(#paint6_linear)"
+              />
+              <path
+                d="M111.591 291.733H44.3849V291.218L78.2447 257.639L111.591 291.733Z"
+                fill="#E6ECF5"
+              />
               <path
                 d="M153.66 103.691C158.476 103.691 162.381 99.7587 162.381 94.9083C162.381 90.058 158.476 86.126 153.66 86.126C148.843 86.126 144.938 90.058 144.938 94.9083C144.938 99.7587 148.843 103.691 153.66 103.691Z"
                 fill="#B4C2D1"
@@ -102,7 +126,10 @@ export default function CompleteCheckout() {
                 d="M315.775 211.661V289.667C315.775 293.802 312.696 296.901 308.592 296.901H181.876C177.772 296.901 174.694 293.802 174.694 289.667V211.661C174.694 207.528 177.772 204.429 181.876 204.429H308.592C312.696 204.429 315.775 207.528 315.775 211.661Z"
                 fill="url(#paint8_linear)"
               />
-              <path d="M315.775 224.059H174.694V241.107H315.775V224.059Z" fill="#526DFF" />
+              <path
+                d="M315.775 224.059H174.694V241.107H315.775V224.059Z"
+                fill="#526DFF"
+              />
               <path
                 d="M256.778 271.07H243.952C242.413 271.07 241.387 270.037 241.387 268.487C241.387 266.938 242.413 265.904 243.952 265.904H256.778C258.317 265.904 259.343 266.938 259.343 268.487C258.83 270.037 257.804 271.07 256.778 271.07Z"
                 fill="white"
@@ -231,20 +258,18 @@ export default function CompleteCheckout() {
           </svg>
         </div>
         <div className="pt-70 pb-50">
-          <h2 className="text-4xl fw-bold text-center color-palette-1 mb-10">Checkout Completed</h2>
-          <p className="text-lg text-center color-palette-1 m-0">
-            Kami akan periksa pembayaran Anda
-            <br
-              className="d-sm-block d-none"
-            />
-            {' '}
-            dan menghubungi via
-            WhatsApp
+          <h2 className="text-4xl fw-bold text-center color-palette-1 mb-10">
+            Your Order Has Been Placed
+          </h2>
 
+          <p className="text-lg text-center color-palette-1 m-0">
+            Mohon datang sesuai dengan jadwal yang sudah anda pilih
+            <br />
+            maksimal keterlambatan adalah 10 menit
           </p>
         </div>
         <div className="button-group d-flex flex-column mx-auto">
-          <Link href="/member">
+          <Link href="/member/transactions">
             <a
               className="btn btn-dashboard fw-medium text-lg text-white rounded-pill mb-16"
               role="button"
@@ -257,8 +282,7 @@ export default function CompleteCheckout() {
             href="https://wa.me/628122722895?text=Saya%20sudah%20melakukan%20pembayaran"
             role="button"
           >
-            WhatsApp
-            ke Admin
+            WhatsApp ke Admin
           </a>
         </div>
       </div>

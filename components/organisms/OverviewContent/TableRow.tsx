@@ -1,63 +1,92 @@
-import cx from 'classnames';
-import NumberFormat from 'react-number-format';
+import cx from "classnames";
+import NumberFormat from "react-number-format";
 
 interface TableRowProps {
-    title: string;
-    categori: string;
-    item: string;
-    price: number;
-    status: string;
-    image: string;
+  carBrand: string;
+  carType: string;
+  carYear: string;
+  price: number;
+  status: number;
+  date: string;
+  licensePlate: string;
+  notes: string;
+  times: string;
+  miles: string;
+  category: Object;
 }
 export default function TableRow(props: TableRowProps) {
   const {
-    title, categori, item, price, status, image,
+    carBrand,
+    carType,
+    carYear,
+    category,
+    date,
+    licensePlate,
+    miles,
+    notes,
+    times,
+    status,
   } = props;
   const statusClass = cx({
-    'float-start icon-status': true,
-    pending: status === 'pending',
-    success: status === 'success',
-    failed: status === 'failed',
+    "float-start icon-status": true,
+    pending: status === 1,
+    success: status === 2,
+    failed: status === 3,
   });
+  const statusDesc = (status: number) => {
+    if (status === 1) {
+      return (
+        <p className="fw-medium text-start color-palette-1 m-0 position-relative">
+          Pending
+        </p>
+      );
+    }
+    if (status === 2) {
+      return (
+        <p className="fw-medium text-start color-palette-2 m-0 position-relative">
+          Konfirmasi Checkin
+        </p>
+      );
+    }
+    return (
+      <p className="fw-medium text-start color-palette-3 m-0 position-relative">
+        Konfirmasi Checkout
+      </p>
+    );
+  };
   return (
     <tr className="align-middle">
-      <th scope="row">
-        <img
-          className="float-start me-3 mb-lg-0 mb-3"
-          src={image}
-          width={80}
-          height={60}
-          alt="game thumb"
-        />
-        <div className="game-title-header">
-          <p className="game-title fw-medium text-start color-palette-1 m-0">
-            {title}
-          </p>
-          <p className="text-xs fw-normal text-start color-palette-2 m-0">{categori}</p>
-        </div>
-      </th>
       <td>
-        <p className="fw-medium color-palette-1 m-0">
-          {item}
-        </p>
+        <p className="fw-medium text-start color-palette-1 m-0">{carBrand}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{carType}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{carYear}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{miles}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{notes}</p>
       </td>
       <td>
         <p className="fw-medium text-start color-palette-1 m-0">
-          <NumberFormat
-            value={price}
-            prefix="Rp. "
-            displayType="text"
-            thousandSeparator="."
-            decimalSeparator=","
-          />
-
+          {licensePlate}
         </p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{date}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{times}</p>
       </td>
       <td>
         <div>
           <span className={statusClass} />
           <p className="fw-medium text-start color-palette-1 m-0 position-relative">
-            {status}
+            {statusDesc(status)}
           </p>
         </div>
       </td>

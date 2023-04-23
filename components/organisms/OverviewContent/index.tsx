@@ -1,21 +1,27 @@
-import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { HistoryTransactionTypes, TopUpCategoriesTypes } from '../../../services/data-types';
-import { getMemberOverview } from '../../../services/member';
-import Categori from './Categori';
-import TableRow from './TableRow';
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  HistoryTransactionTypes,
+  TopUpCategoriesTypes,
+} from "../../../services/data-types";
+import { getMemberTransactions } from "../../../services/member";
+import Categori from "./Categori";
+import TableRow from "./TableRow";
+import moment from "moment";
 
 export default function OverviewContent() {
-  const [count, setCount] = useState([]);
+  // const [count, setCount] = useState([]);
   const [data, setData] = useState([]);
 
+  console;
+
   const getMemberOverviewAPI = useCallback(async () => {
-    const response = await getMemberOverview();
+    const response = await getMemberTransactions();
     if (response.error) {
       toast.error(response.message);
     } else {
-      setCount(response.data.count);
-      setData(response.data.data);
+      // setCount(response.data.count);
+      setData(response.data);
     }
   }, []);
 
@@ -23,32 +29,30 @@ export default function OverviewContent() {
     getMemberOverviewAPI();
   }, []);
 
-  const IMG = process.env.NEXT_PUBLIC_IMG;
+  console.log(data);
+
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
         <h2 className="text-4xl fw-bold color-palette-1 mb-30">Overview</h2>
-        <div className="top-up-categories mb-30">
-          <p className="text-lg fw-medium color-palette-1 mb-14">Top Up Categories</p>
-          <div className="main-content">
-            <div className="row">
-              {count.map((item: TopUpCategoriesTypes) => (
-                <Categori key={item._id} nominal={item.value} icon="ic-desktop">
-                  {item.name}
-                </Categori>
-              ))}
-            </div>
-          </div>
-        </div>
         <div className="latest-transaction">
-          <p className="text-lg fw-medium color-palette-1 mb-14">Latest Transactions</p>
-          <div className="main-content main-content-table overflow-auto">
+          <p className="text-lg fw-medium color-palette-1 mb-14">
+            Latest Transactions
+          </p>
+          <div className="main-content">
             <table className="table table-borderless">
               <thead>
                 <tr className="color-palette-1">
-                  <th className="text-start" scope="col">Game</th>
-                  <th scope="col">Item</th>
-                  <th scope="col">Price</th>
+                  <th className="text-start" scope="col">
+                    Merek Mobil
+                  </th>
+                  <th scope="col">Tipe </th>
+                  <th scope="col">Tahun </th>
+                  <th scope="col">Kilometer</th>
+                  <th scope="col">Notes</th>
+                  <th scope="col">Nomor Plat</th>
+                  <th scope="col">Tanggal </th>
+                  <th scope="col">Jam </th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
@@ -56,11 +60,14 @@ export default function OverviewContent() {
                 {data.map((item: HistoryTransactionTypes) => (
                   <TableRow
                     key={item._id}
-                    image={`${IMG}/${item.historyVoucherTopup.thumbnail}`}
-                    title={item.historyVoucherTopup.gameName}
-                    categori={item.historyVoucherTopup.category}
-                    item={`${item.historyVoucherTopup.coinQuantity} ${item.historyVoucherTopup.coinName}`}
-                    price={item.value}
+                    carBrand={item.carBrand}
+                    carType={item.carType}
+                    carYear={item.carYear}
+                    miles={item.miles}
+                    notes={item.notes}
+                    licensePlate={item.licensePlate}
+                    date={moment(item.chooseDate).format("DD MMMM YYYY")}
+                    times={item.chooseTime}
                     status={item.status}
                   />
                 ))}

@@ -1,76 +1,116 @@
-import Link from 'next/link';
-import cx from 'classnames';
-import NumberFormat from 'react-number-format';
+import Link from "next/link";
+import cx from "classnames";
+import { Rupiah } from "../../../Helpers/convertnumber";
 
 interface TableRowProps {
-    image: string;
-    title: string;
-    category: string;
-    item: string;
-    price: number;
-    status: string;
-    id: string;
+  carBrand: string;
+  carType: string;
+  carYear: string;
+  price: number;
+  status: number | any;
+  date: string;
+  licensePlate: string;
+  notes: string;
+  times: string;
+  miles: string;
+  category: Object | any;
+  id: string;
+  onChangeStatus: any;
+  cancelTransaction: any;
 }
 export default function TableRow(props: TableRowProps) {
   const {
-    image, title, category, item, price, status, id,
+    date,
+    licensePlate,
+    times,
+    status,
+    category,
+    id,
+    onChangeStatus,
+    cancelTransaction,
   } = props;
+
   const statusClass = cx({
-    'float-start icon-status': true,
-    pending: status === 'pending',
-    success: status === 'success',
-    failed: status === 'failed',
+    "float-start icon-status": true,
+    pending: status === 0,
+    checkin: status === 1,
+    confirmCheckin: status === 2,
+    checkout: status === 3,
   });
+  const statusDesc = (status: number) => {
+    if (status === 0) {
+      return (
+        <button
+          className="btn btn-status rounded-pill text-xs"
+          onClick={() => cancelTransaction(id)}
+        >
+          Batalkan Service
+        </button>
+      );
+    }
+    if (status === 1) {
+      return (
+        <button
+          className="btn btn-status rounded-pill text-xs"
+          onClick={() => onChangeStatus(2, id)}
+        >
+          Konfirmasi Checkin
+        </button>
+      );
+    }
+    if (status === 2) {
+      return (
+        <p className="fw-small text-start color-palette-3 m-0 position-relative">
+          Service <br />
+          Sedang <br />
+          Berlangsung
+        </p>
+      );
+    }
+    return (
+      <p className="fw-medium text-start color-palette-3 m-0 position-relative">
+        Selesai
+      </p>
+    );
+  };
+
   return (
     <tr data-category="pending" className="align-middle">
-      <th scope="row">
-        <img
-          className="float-start me-3 mb-lg-0 mb-3"
-          src={image}
-          width="80"
-          height="60"
-          alt=""
-        />
-        <div className="game-title-header">
-          <p className="game-title fw-medium text-start color-palette-1 m-0">
-            {title}
-          </p>
-          <p className="text-xs fw-normal text-start color-palette-2 m-0">{category}</p>
-        </div>
-      </th>
       <td>
-        <p className="fw-medium color-palette-1 m-0">
-          {item}
+        <p className="fw-medium text-start color-palette-1 m-0">
+          {category.name}
         </p>
       </td>
       <td>
-        <p className="fw-medium color-palette-1 m-0">
-          <NumberFormat
-            value={price}
-            prefix="Rp. "
-            displayType="text"
-            thousandSeparator="."
-            decimalSeparator=","
-          />
-
+        <p className="fw-medium text-start color-palette-1 m-0">
+          {Rupiah(category.price)}
         </p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">
+          {licensePlate}
+        </p>
+      </td>
+
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{date}</p>
+      </td>
+      <td>
+        <p className="fw-medium text-start color-palette-1 m-0">{times}</p>
       </td>
       <td>
         <div>
-          <span className={statusClass} />
+          {/* <span className={statusClass} /> */}
           <p className="fw-medium text-start color-palette-1 m-0 position-relative">
-            {status}
+            {statusDesc(status)}
           </p>
         </div>
       </td>
       <td>
-        <Link href={`/member/transactions/${id}`}>
-          <a
-            className="btn btn-status rounded-pill text-sm"
-          >
+        <Link href={{ pathname: `/member/transactions/${id}` }}>
+          <button className="btn btn-status rounded-pill text-sm">
             Details
-
-          </a>
+          </button>
         </Link>
       </td>
     </tr>
