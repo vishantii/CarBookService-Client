@@ -78,7 +78,7 @@ export default function TransactionContent() {
       time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime(convertDate);
+    const res = await getServiceTime({ date: convertDate });
     setFormData((prevFormData) => ({
       ...prevFormData,
       time: res.data,
