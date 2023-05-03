@@ -49,7 +49,10 @@ export async function updateProfile(data: FormData, id: string) {
     token: true,
   });
 }
-export async function updateStatusTransaction(data: FormData, id: string) {
+export async function updateStatusTransaction(
+  data: { status: any },
+  id: string
+) {
   const url = `${ROOT_API}/${API_VERSION}/customers/transactions/${id}`;
 
   return callAPI({

@@ -29,7 +29,6 @@ export default function TableRow(props: any) {
     category,
     id,
     onChangeStatus,
-    cancelTransaction,
     setShowModal,
     setTempData,
   } = props;

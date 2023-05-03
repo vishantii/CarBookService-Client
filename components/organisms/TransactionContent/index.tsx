@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import NumberFormat from "react-number-format";
 import TableRow from "./TableRow";
 import {
   cancelTransaction,
@@ -50,23 +49,12 @@ export default function TransactionContent() {
   // };
 
   const onChangeStatus = async (status?: any, id?: any) => {
-    const res = await updateStatusTransaction(status, id);
+    const res = await updateStatusTransaction({ status: status }, id);
 
     if (res.error) {
       toast.error(res.message);
     } else {
       toast.success("Berhasil Ubah Status");
-      getMemberTransactionAPI();
-    }
-  };
-
-  const onCancelTransaction = async (id: any) => {
-    const res = await cancelTransaction(id);
-
-    if (res.error) {
-      toast.error(res.message);
-    } else {
-      toast.success("Berhasil Membatalkan Transaksi");
       getMemberTransactionAPI();
     }
   };
@@ -174,7 +162,6 @@ export default function TransactionContent() {
                       times={item.chooseTime}
                       status={item.status}
                       onChangeStatus={onChangeStatus}
-                      cancelTransaction={onCancelTransaction}
                       setShowModal={setShowModal}
                       setTempData={setTempData}
                     />
