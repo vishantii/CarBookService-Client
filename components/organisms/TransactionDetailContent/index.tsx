@@ -6,9 +6,7 @@ import { setInvoice } from "../../../services/player";
 interface TransactionDetailContentProps {
   data: HistoryTransactionTypes;
 }
-export default function TransactionDetailContent(
-  props: TransactionDetailContentProps
-) {
+export default function TransactionDetailContent(props: any) {
   const { data } = props;
 
   const onGenerateInvoice = async () => {

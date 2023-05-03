@@ -6,15 +6,16 @@ interface TableRowProps {
   carType: string;
   carYear: string;
   price: number;
-  status: number;
+  status: any;
   date: string;
   licensePlate: string;
   notes: string;
   times: string;
   miles: string;
   category: Object;
+  key: any;
 }
-export default function TableRow(props: TableRowProps) {
+export default function TableRow(props: any) {
   const {
     carBrand,
     carType,

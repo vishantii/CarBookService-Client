@@ -35,8 +35,8 @@ export default function CheckoutDetail() {
         <h2 className="fw-bold text-xl color-palette-1 mb-20">
           Detail Service
         </h2>
-        {dataService.spareparts.map((sparepart) => (
-          <p key={sparepart.id} className="text-lg color-palette-1 mb-20">
+        {dataService.spareparts.map((sparepart: any) => (
+          <p key={sparepart._id} className="text-lg color-palette-1 mb-20">
             {sparepart.name} x {sparepart.quantity}{" "}
             <span className="purchase-details">
               <NumberFormat

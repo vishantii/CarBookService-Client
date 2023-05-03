@@ -16,6 +16,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 
+interface Part {
+  _id: string;
+  name: string;
+  price: number;
+}
+interface Category {
+  _id: any;
+  name: string;
+  price: number;
+}
+
 const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
 };
@@ -36,8 +47,12 @@ export default function ServiceForm() {
   });
 
   const [categories, setCategories] = useState([]);
-  const [catById, setCatById] = useState({});
-  const [availableParts, setAvailableParts] = useState([]);
+  const [catById, setCatById] = useState<any>({
+    _id: "",
+    name: "",
+    price: 0,
+  });
+  const [availableParts, setAvailableParts] = useState<Part[]>([]);
   const [selectedParts, setSelectedParts] = useState<string[]>([]);
   const [partQuantities, setPartQuantities] = useState<{
     [id: string]: number;
@@ -65,9 +80,7 @@ export default function ServiceForm() {
       time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime({
-      date: convertDate,
-    });
+    const res = await getServiceTime(convertDate);
     setFormData((prevFormData) => ({
       ...prevFormData,
       time: res.data,
@@ -75,7 +88,7 @@ export default function ServiceForm() {
   };
 
   const onSelectCategory = async (value) => {
-    const res = await getCategoryById({ id: value });
+    const res = await getCategoryById(value); // Pass the value directly
     res.data.map((item) =>
       setCatById({
         id: item._id,
@@ -92,10 +105,10 @@ export default function ServiceForm() {
 
   const onSubmit = () => {
     const date = moment(formData.startDate).format("YYYY-MM-DD");
-    const spareParts: any = [];
-    let totalPrice = 0;
+    const spareParts: any[] = [];
+    let totalPrice: any = 0;
 
-    selectedParts.forEach((partId) => {
+    selectedParts.forEach((partId: any) => {
       const part = availableParts.find((p) => p._id === partId);
       if (part) {
         const quantity = partQuantities[partId] ?? 0;
@@ -154,7 +167,7 @@ export default function ServiceForm() {
       event: React.ChangeEvent<HTMLSelectElement>
     ) => {
       const options = event.target.options;
-      const selectedIds = [];
+      const selectedIds: string[] = [];
       for (let i = 0; i < options.length; i++) {
         const option = options.item(i);
         if (option?.selected) {
@@ -164,7 +177,7 @@ export default function ServiceForm() {
 
       // Filter out already selected parts
       const newSelectedParts = selectedIds.filter(
-        (partId) => !partQuantities.hasOwnProperty(partId)
+        (partId: string) => !partQuantities.hasOwnProperty(partId)
       );
 
       // Add new parts with default quantity of 1

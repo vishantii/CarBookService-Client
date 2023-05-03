@@ -17,8 +17,10 @@ interface TableRowProps {
   id: string;
   onChangeStatus: any;
   cancelTransaction: any;
+  setShowModal: any;
+  setTempData: any;
 }
-export default function TableRow(props: TableRowProps) {
+export default function TableRow(props: any) {
   const {
     date,
     licensePlate,

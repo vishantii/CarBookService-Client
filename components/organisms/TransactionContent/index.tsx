@@ -49,8 +49,8 @@ export default function TransactionContent() {
   //   getMemberTransactionAPI();
   // };
 
-  const onChangeStatus = async (status?: Number, id?: string) => {
-    const res = await updateStatusTransaction({ status: status }, id);
+  const onChangeStatus = async (status?: any, id?: any) => {
+    const res = await updateStatusTransaction(status, id);
 
     if (res.error) {
       toast.error(res.message);
@@ -60,8 +60,8 @@ export default function TransactionContent() {
     }
   };
 
-  const onCancelTransaction = async (id: string) => {
-    const res = await cancelTransaction({ id: id });
+  const onCancelTransaction = async (id: any) => {
+    const res = await cancelTransaction(id);
 
     if (res.error) {
       toast.error(res.message);
@@ -78,9 +78,7 @@ export default function TransactionContent() {
       time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime({
-      date: convertDate,
-    });
+    const res = await getServiceTime(convertDate);
     setFormData((prevFormData) => ({
       ...prevFormData,
       time: res.data,
