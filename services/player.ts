@@ -31,7 +31,7 @@ export async function getServiceSparepart() {
   return axiosResponse.data;
 }
 
-export async function getServiceTime(data: string) {
+export async function getServiceTime(data: { date: string }) {
   const url = `${ROOT_API}/${API_VERSION}/schedule/availabilty`;
 
   return callAPI({
@@ -42,7 +42,7 @@ export async function getServiceTime(data: string) {
   });
 }
 
-export async function getCategoryById(data: string) {
+export async function getCategoryById(data: { id: string }) {
   const url = `${ROOT_API}/${API_VERSION}/customers/category/byId`;
 
   return callAPI({

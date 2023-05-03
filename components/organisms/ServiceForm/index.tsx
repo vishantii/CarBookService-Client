@@ -80,7 +80,7 @@ export default function ServiceForm() {
       time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime(convertDate);
+    const res = await getServiceTime({ date: convertDate });
     setFormData((prevFormData) => ({
       ...prevFormData,
       time: res.data,
@@ -88,8 +88,8 @@ export default function ServiceForm() {
   };
 
   const onSelectCategory = async (value) => {
-    const res = await getCategoryById(value); // Pass the value directly
-    res.data.map((item) =>
+    const res = await getCategoryById({ id: value }); // Pass the value directly
+    res.data.map((item: any) =>
       setCatById({
         id: item._id,
         name: item.name,
