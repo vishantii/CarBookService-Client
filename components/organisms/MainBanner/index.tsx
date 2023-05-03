@@ -8,7 +8,7 @@ export default function MainBanner() {
       <h1 className="display-4 title-repair">Car repair at your Services</h1>
       <div className="mt-5">
         <Link href="/service">
-          <a className="btn btn-repair" href="#" role="button">
+          <a className="btn btn-repair" role="button">
             Repair Now
           </a>
         </Link>
