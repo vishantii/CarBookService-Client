@@ -10,12 +10,12 @@ export default function Home() {
   const router = useRouter();
 
   const onService = () => {
-    router.push("/service");
+    return router.push("/service");
   };
   return (
     <>
       <Head>
-        <title>Bring your car here & Let see what happen</title>
+        {/* <title>Bring your car here & Let see what happen</title>
         <meta
           name="description"
           content="Kami menyediakan jutaan cara untuk membantu players menjadi pemenang sejati"
@@ -29,7 +29,7 @@ export default function Home() {
           content="Kami menyediakan jutaan cara untuk membantu players menjadi pemenang sejati"
         />
         <meta property="og:image" content="https://imageurlkalian" />
-        <meta property="og:url" content="https://storegg.com" />
+        <meta property="og:url" content="https://storegg.com" /> */}
       </Head>
       <Navbar />
       <MainBanner onService={onService} />
