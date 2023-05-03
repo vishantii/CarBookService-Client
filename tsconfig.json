@@ -12,8 +12,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "noImplicitAny": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "next.config.js"],
-  "exclude": ["node_modules", "stories"]
+  "exclude": ["node_modules", "stories"],
+  "typeRoots": ["../node_modules/@types", "../@types"]
 }
