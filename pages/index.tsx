@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import AOS from "aos";
 import Head from "next/head";
 import Navbar from "../components/organisms/Navbar";
 import MainBanner from "../components/organisms/MainBanner";
@@ -10,9 +8,7 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
-  useEffect(() => {
-    AOS.init();
-  }, []);
+
   const onService = () => {
     router.push("/service");
   };

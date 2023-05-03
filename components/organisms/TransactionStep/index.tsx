@@ -7,7 +7,7 @@ export default function TransactionStep() {
         <h2 className="text-4xl fw-bold color-palette-1 text-center mb-30">
           About Us
         </h2>
-        <div className="row gap-lg-0 gap-4" data-aos="fade-up">
+        <div className="row gap-lg-0 gap-4">
           <StepItem
             icon="step1"
             title="1. Who we are?"
