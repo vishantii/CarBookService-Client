@@ -1,88 +1,240 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, ChangeEvent, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
 import {
   getCategoryById,
   getServiceCategory,
+  getServiceSparepart,
   getServiceTime,
 } from "../../../services/player";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import Select from "react-select";
 
 import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 
+const className = {
+  label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
+};
+
 export default function ServiceForm() {
-  const [carBrand, setCarBrand] = useState("");
-  const [carType, setCarType] = useState("");
-  const [carYear, setCarYear] = useState("");
-  const [miles, setMiles] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [time, setTime] = useState([]);
-  const [times, setTimes] = useState("");
-  const [notes, setNotes] = useState("");
-  const [catById, setCatById] = useState({});
-  const [catService, setCatService] = useState([]);
+  const [formData, setFormData] = useState({
+    carBrand: "",
+    carType: "",
+    carYear: "",
+    miles: "",
+    licensePlate: "",
+    startDate: "",
+    time: [],
+    times: "",
+    notes: "",
+    catById: {},
+    total: 0,
+  });
+
   const [categories, setCategories] = useState([]);
-  const timeCheck = _.isEmpty(time);
+  const [catById, setCatById] = useState({});
+  const [availableParts, setAvailableParts] = useState([]);
+  const [selectedParts, setSelectedParts] = useState<string[]>([]);
+  const [partQuantities, setPartQuantities] = useState<{
+    [id: string]: number;
+  }>({});
+
+  const timeCheck = _.isEmpty(formData.time);
 
   const router = useRouter();
-  const className = {
-    label: cx("form-label text-lg fw-medium color-palette-1 mb-10"),
-  };
 
   const getServiceCategoryAPI = useCallback(async () => {
     const data = await getServiceCategory();
 
     setCategories(data);
-    setCatService(data[0].price);
   }, [getServiceCategory]);
 
+  const getServiceSparepartAPI = useCallback(async () => {
+    const parts = await getServiceSparepart();
+    setAvailableParts(parts);
+  }, [getServiceSparepart]);
+
   const onChangeDate = async (dates: any) => {
-    setStartDate(dates);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      startDate: dates,
+      time: [], // Clear the time array when the date changes
+    }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    await getServiceTime({
+    const res = await getServiceTime({
       date: convertDate,
-    }).then((res) => {
-      setTime(res.data);
     });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      time: res.data,
+    }));
   };
 
-  const onSelectCategory = async (value: any) => {
-    await getCategoryById({ id: value }).then((res: any) => {
-      res.data.map((item: any) =>
-        setCatById({
-          id: item._id,
-          name: item.name,
-          price: item.price,
-        })
-      );
-    });
+  const onSelectCategory = async (value) => {
+    const res = await getCategoryById({ id: value });
+    res.data.map((item) =>
+      setCatById({
+        id: item._id,
+        name: item.name,
+        price: item.price,
+      })
+    );
   };
 
   useEffect(() => {
     getServiceCategoryAPI();
+    getServiceSparepartAPI();
   }, []);
 
   const onSubmit = () => {
-    const date = moment(startDate).format("YYYY-MM-DD");
+    const date = moment(formData.startDate).format("YYYY-MM-DD");
+    const spareParts: any = [];
+    let totalPrice = 0;
+
+    selectedParts.forEach((partId) => {
+      const part = availableParts.find((p) => p._id === partId);
+      if (part) {
+        const quantity = partQuantities[partId] ?? 0;
+        spareParts.push({
+          sparepartId: part._id,
+          name: part.name,
+          price: part.price,
+          quantity: quantity,
+        });
+        totalPrice += part.price * quantity;
+      }
+    });
+
+    const finalPrice = parseInt(totalPrice) + parseInt(catById.price);
+
     const userForm = {
-      carBrand,
-      carType,
-      carYear,
-      miles,
-      licensePlate,
+      ...formData,
       date,
-      times,
-      notes,
       catById,
+      spareparts: spareParts,
+      total: finalPrice,
     };
 
     localStorage.setItem("service-form", JSON.stringify(userForm));
     router.push("/checkout");
+  };
+
+  const handleChange = (event: any) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const SparePartsList = () => {
+    const handleQuantityChange = (partId: string, quantity: number) => {
+      if (quantity === 0) {
+        setPartQuantities((prevQuantities) => {
+          const newQuantities = { ...prevQuantities };
+          delete newQuantities[partId];
+          return newQuantities;
+        });
+
+        setSelectedParts((prevSelectedParts) =>
+          prevSelectedParts.filter((id) => id !== partId)
+        );
+      } else {
+        setPartQuantities((prevQuantities) => ({
+          ...prevQuantities,
+          [partId]: quantity,
+        }));
+      }
+    };
+
+    const handleSelectChange = (
+      event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      const options = event.target.options;
+      const selectedIds = [];
+      for (let i = 0; i < options.length; i++) {
+        const option = options.item(i);
+        if (option?.selected) {
+          selectedIds.push(option.value);
+        }
+      }
+
+      // Filter out already selected parts
+      const newSelectedParts = selectedIds.filter(
+        (partId) => !partQuantities.hasOwnProperty(partId)
+      );
+
+      // Add new parts with default quantity of 1
+      setPartQuantities((prevQuantities) => {
+        const newQuantities = { ...prevQuantities };
+        newSelectedParts.forEach((partId) => {
+          newQuantities[partId] = 1;
+        });
+        return newQuantities;
+      });
+
+      setSelectedParts((prevSelectedParts) => [
+        ...prevSelectedParts,
+        ...newSelectedParts,
+      ]);
+    };
+
+    return (
+      <>
+        <select
+          className="form-select d-block w-100"
+          multiple // Add the "multiple" attribute here
+          value={selectedParts}
+          onChange={handleSelectChange}
+        >
+          {availableParts.map((part: any) => (
+            <option
+              key={part._id}
+              value={part._id}
+              disabled={part.status === "N"}
+            >
+              {part.name} - {Rupiah(part.price)}
+            </option>
+          ))}
+        </select>
+
+        {selectedParts.map((partId) => {
+          const part = availableParts.find(({ _id }) => _id === partId);
+          if (!part) {
+            return null;
+          }
+          const quantity = partQuantities[partId] ?? 0;
+          return (
+            <div key={partId} className="d-flex align-items-center my-2">
+              <div className="flex-grow-1">
+                {part.name} - {Rupiah(part.price)}
+              </div>
+              <div className="d-inline-block ml-3">
+                <button
+                  type="button"
+                  className="btn btn-light btn-sm"
+                  onClick={() => handleQuantityChange(partId, quantity - 1)}
+                  disabled={quantity <= 0}
+                >
+                  <i className="fa fa-minus">-</i>
+                </button>
+                <span className="mx-2">{quantity}</span>
+                <button
+                  type="button"
+                  className="btn btn-light btn-sm"
+                  onClick={() => handleQuantityChange(partId, quantity + 1)}
+                >
+                  <i className="fa fa-plus">+</i>
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
   };
 
   return (
@@ -95,8 +247,9 @@ export default function ServiceForm() {
           className="form-control rounded-pill text-lg"
           aria-describedby="name"
           placeholder="Enter your Car Brand"
-          value={carBrand}
-          onChange={(event) => setCarBrand(event.target.value)}
+          name="carBrand"
+          value={formData.carBrand}
+          onChange={handleChange}
         />
       </div>
       <div className="pt-30">
@@ -105,8 +258,9 @@ export default function ServiceForm() {
           type="email"
           className="form-control rounded-pill text-lg"
           placeholder="Enter your Car Type"
-          value={carType}
-          onChange={(event) => setCarType(event.target.value)}
+          name="carType"
+          value={formData.carType}
+          onChange={handleChange}
         />
       </div>
       <div className="pt-30">
@@ -115,50 +269,56 @@ export default function ServiceForm() {
           type="text"
           className="form-control rounded-pill text-lg"
           placeholder="Enter Car Year"
-          value={carYear}
-          onChange={(event) => setCarYear(event.target.value)}
+          name="carYear"
+          value={formData.carYear}
+          onChange={handleChange}
         />
       </div>
       <div className="pt-30">
-        <label className={className.label}>Jumlah Kilometer</label>
+        <label className={className.label}>Jarak Tempuh</label>
         <input
           type="text"
           className="form-control rounded-pill text-lg"
-          placeholder="Total Miles"
-          value={miles}
-          onChange={(event) => setMiles(event.target.value)}
+          placeholder="Enter Miles"
+          name="miles"
+          value={formData.miles}
+          onChange={handleChange}
         />
       </div>
       <div className="pt-30">
-        <label className={className.label}>Nomor Plat Mobil</label>
+        <label className={className.label}>Nomor Plat</label>
         <input
           type="text"
           className="form-control rounded-pill text-lg"
-          placeholder="Your Plate License"
-          value={licensePlate}
-          onChange={(event) => setLicensePlate(event.target.value)}
+          placeholder="Enter License Plate"
+          name="licensePlate"
+          value={formData.licensePlate}
+          onChange={handleChange}
         />
       </div>
       <div className="pt-30">
-        <label htmlFor="category" className={className.label}>
-          Kategori Servis
-        </label>
+        <label className={className.label}>Kategori Service</label>
         <select
-          id="category"
-          name="category"
-          className="form-select rounded-pill text-lg p-3 category-select"
-          aria-label="Service Category"
-          placeholder="Pilih Kategori Servis"
-          onChange={(event) => onSelectCategory(event.target.value)}
+          name="categories"
+          id="categories"
+          className="form-control rounded-pill text-lg category-select p-3"
+          onChange={(event) => {
+            onSelectCategory(event.target.value);
+          }}
         >
-          {categories.map((category: CategoryTypes) => {
-            return (
-              <option key={category._id} value={category._id} selected>
-                {category.name} - {Rupiah(parseInt(category.price))}
-              </option>
-            );
-          })}
+          <option value="">Select Category</option>
+          {categories.map((category: CategoryTypes) => (
+            <option value={category._id} key={category._id}>
+              {category.name}
+            </option>
+          ))}
         </select>
+      </div>
+      <div className="pt-30">
+        <h2 className="fw-bold text-xl color-palette-1 mb-20">
+          Sparepart yang Tersedia
+        </h2>
+        <SparePartsList />
       </div>
       <div className="pt-30">
         <label className={className.label}>Pilih Tanggal Service</label>
@@ -166,51 +326,66 @@ export default function ServiceForm() {
           minDate={moment().toDate()}
           placeholderText="Pilih Tanggal"
           className="form-select rounded-pill text-lg"
-          selected={startDate}
+          selected={formData.startDate}
           onChange={(date: any) => {
             onChangeDate(date);
           }}
         />
       </div>
+
       {!timeCheck ? (
         <div className="pt-30">
-          <label htmlFor="time" className={className.label}>
-            Pilih Jam
-          </label>
+          <label className={className.label}>Waktu Service</label>
           <select
-            id="time"
-            name="time"
-            placeholder="Pilih Jam"
-            className="form-select rounded-pill text-lg p-3 category-select"
-            value={times}
-            onChange={(event) => setTimes(event.target.value)}
+            name="times"
+            id="times"
+            className="form-control rounded-pill text-lg category-select p-3"
+            onChange={(event) => {
+              setFormData({
+                ...formData,
+                times: event.target.value,
+              });
+            }}
           >
-            {time.map((times: any) => (
-              <option key={times._id} value={times.time} selected>
-                {times.available ? times.time : null}
+            <option value="">Select Time</option>
+            {formData.time.map((time: any) => (
+              <option key={time.id} value={time.time}>
+                {time.available && time.time}
               </option>
             ))}
           </select>
         </div>
       ) : null}
+
       <div className="pt-30">
-        <label className={className.label}>Keluhan Yang Dialami</label>
+        <label className={className.label}>Catatan</label>
         <textarea
+          name="notes"
+          id="notes"
+          cols={30}
           rows={5}
-          cols={100}
-          className="form-control text-lg category-select"
-          placeholder="Your Notes to Mechanic"
-          value={notes}
-          onChange={(event) => setNotes(event.target.value)}
+          className="form-control rounded-lg"
+          placeholder="Type your notes here..."
+          defaultValue={""}
+          onChange={handleChange}
         />
       </div>
-      <div className="button-group d-flex flex-column mx-auto pt-50">
+      <div className="button-group d-flex flex-row mt-50 pt-4">
         <button
-          type="button"
-          className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
+          className="btn btn-sign-up fw-medium text-lg text-white rounded-pill"
+          disabled={
+            timeCheck ||
+            !formData.carBrand ||
+            !formData.carType ||
+            !formData.carYear ||
+            !formData.miles ||
+            !formData.licensePlate ||
+            !formData.startDate ||
+            !formData.times
+          }
           onClick={onSubmit}
         >
-          Continue
+          Continue to Book
         </button>
       </div>
     </>

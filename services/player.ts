@@ -22,6 +22,14 @@ export async function getServiceCategory() {
 
   return axiosResponse.data;
 }
+export async function getServiceSparepart() {
+  const URL = "customers/sparepart";
+
+  const response = await axios.get(`${ROOT_API}/${API_VERSION}/${URL}`);
+  const axiosResponse = response.data;
+
+  return axiosResponse.data;
+}
 
 export async function getServiceTime(data: string) {
   const url = `${ROOT_API}/${API_VERSION}/schedule/availabilty`;
@@ -55,6 +63,18 @@ export async function setCheckout(data: CheckoutTypes) {
     token: true,
   });
 }
+
+export async function setInvoice(data: CheckoutTypes) {
+  const url = `${ROOT_API}/${API_VERSION}/customers/invoice`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    token: true,
+  });
+}
+
 export async function setTimeUpdate(data: TimeDataUpdateTypes) {
   const url = `${ROOT_API}/${API_VERSION}/customers/timeslots`;
 

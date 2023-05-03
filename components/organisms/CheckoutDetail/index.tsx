@@ -17,6 +17,8 @@ export default function CheckoutDetail() {
     miles: "",
     notes: "",
     times: "",
+    spareparts: [],
+    total: "",
   });
 
   useEffect(() => {
@@ -26,13 +28,88 @@ export default function CheckoutDetail() {
   }, []);
 
   const itemPrice = parseInt(dataService.catById.price);
-  const tax = parseInt(dataService.catById.price) * (10 / 100);
-  const totalPrice = itemPrice + tax;
+
+  const renderSparepartList = () => {
+    return (
+      <div className="sparepart pt-50">
+        <h2 className="fw-bold text-xl color-palette-1 mb-20">
+          Detail Service
+        </h2>
+        {dataService.spareparts.map((sparepart) => (
+          <p key={sparepart.id} className="text-lg color-palette-1 mb-20">
+            {sparepart.name} x {sparepart.quantity}{" "}
+            <span className="purchase-details">
+              <NumberFormat
+                value={sparepart.price * sparepart.quantity}
+                prefix="Rp. "
+                displayType="text"
+                thousandSeparator="."
+                decimalSeparator=","
+              />
+            </span>
+          </p>
+        ))}
+        <p className="text-lg color-palette-1 mb-20">
+          Biaya Service{" "}
+          <span className="purchase-details">
+            <NumberFormat
+              value={itemPrice}
+              prefix="Rp. "
+              displayType="text"
+              thousandSeparator="."
+              decimalSeparator=","
+            />
+          </span>
+        </p>
+      </div>
+    );
+  };
+
+  const renderServiceSchedule = () => {
+    return (
+      <div className="sparepart pt-50">
+        <h2 className="fw-bold text-xl color-palette-1 mb-20">
+          Jadwal Service
+        </h2>
+        <p className="text-lg color-palette-1 mb-20">
+          Tanggal Servis
+          <span className="purchase-details">
+            {moment(dataService.date).format("DD MMMM YYYY")}
+          </span>
+        </p>
+        <p className="text-lg color-palette-1 mb-20">
+          Jam Servis
+          <span className="purchase-details">{dataService.times}</span>
+        </p>
+      </div>
+    );
+  };
+
+  const renderTotal = () => {
+    return (
+      <div className="sparepart pt-50">
+        <h2 className="fw-bold text-xl color-palette-1 mb-20">Total Biaya</h2>
+        <p className="text-lg color-palette-1 mb-20">
+          Total{" "}
+          <span className="purchase-details color-palette-4">
+            <NumberFormat
+              value={dataService.total}
+              prefix="Rp. "
+              displayType="text"
+              thousandSeparator="."
+              decimalSeparator=","
+            />
+          </span>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="purchase pt-md-50 pt-30">
         <h2 className="fw-bold text-xl color-palette-1 mb-20">
-          Purchase Details
+          Detail Kendaraan
         </h2>
         <p className="text-lg color-palette-1 mb-20">
           Merk Mobil
@@ -46,56 +123,14 @@ export default function CheckoutDetail() {
           Tahun Mobil
           <span className="purchase-details">{dataService.carYear}</span>
         </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Tanggal Servis
-          <span className="purchase-details">
-            {moment(dataService.date).format("DD MMMM YYYY")}
-          </span>
-        </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Jam Servis
-          <span className="purchase-details">{dataService.times}</span>
-        </p>
+
         <p className="text-lg color-palette-1 mb-20">
           Keluhan
           <span className="purchase-details">{dataService.notes}</span>
         </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Biaya Service{" "}
-          <span className="purchase-details">
-            <NumberFormat
-              value={itemPrice}
-              prefix="Rp. "
-              displayType="text"
-              thousandSeparator="."
-              decimalSeparator=","
-            />
-          </span>
-        </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Tax (10%){" "}
-          <span className="purchase-details">
-            <NumberFormat
-              value={tax}
-              prefix="Rp. "
-              displayType="text"
-              thousandSeparator="."
-              decimalSeparator=","
-            />
-          </span>
-        </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Total{" "}
-          <span className="purchase-details color-palette-4">
-            <NumberFormat
-              value={totalPrice}
-              prefix="Rp. "
-              displayType="text"
-              thousandSeparator="."
-              decimalSeparator=","
-            />
-          </span>
-        </p>
+        {renderServiceSchedule()}
+        {renderSparepartList()}
+        {renderTotal()}
       </div>
     </>
   );

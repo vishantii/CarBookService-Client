@@ -8,38 +8,69 @@ import {
 
 export default function CheckoutConfirmation() {
   const [checkbox, setCheckBox] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const onSubmit = () => {
-    const dataItemLocal = localStorage.getItem("service-form");
+  const onSubmit = async (event: any) => {
+    event.preventDefault();
+    setIsLoading(true); // set loading state to true
 
-    const dataItem = JSON.parse(dataItemLocal!);
+    const dataItemLocal = localStorage.getItem("service-form");
+    const {
+      carBrand,
+      carType,
+      carYear,
+      miles,
+      catById,
+      licensePlate,
+      date,
+      times,
+      notes,
+      spareparts,
+      total,
+    } = JSON.parse(dataItemLocal!);
 
     const data: CheckoutTypes = {
-      carBrand: dataItem.carBrand,
-      carType: dataItem.carType,
-      carYear: dataItem.carYear,
-      miles: dataItem.miles,
+      carBrand,
+      carType,
+      carYear,
+      miles,
       category: {
-        id: dataItem.catById.id,
-        name: dataItem.catById.name,
-        price: dataItem.catById.price,
+        id: catById.id,
+        name: catById.name,
+        price: catById.price,
       },
-      licensePlate: dataItem.licensePlate,
-      chooseDate: dataItem.date,
-      chooseTime: dataItem.times,
-      notes: dataItem.notes,
+      licensePlate,
+      chooseDate: date,
+      chooseTime: times,
+      notes,
+      spareparts,
+      total,
     };
 
     const timeDataUpdate: TimeDataUpdateTypes = {
-      date: dataItem.date,
-      time: dataItem.times,
+      date,
+      time: times,
     };
 
-    Promise.all([setTimeUpdate(timeDataUpdate), setCheckout(data)]).then(() => {
-      router.push("/complete-checkout");
-    });
+    try {
+      await Promise.all([
+        setTimeUpdate(timeDataUpdate),
+        setCheckout(data),
+      ]).then((res) => {
+        if (res) {
+          console.log("res-->", res);
+          return router.push("/complete-checkout");
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      // handle error
+    } finally {
+      setIsLoading(false); // set loading state to false
+    }
   };
+
   return (
     <>
       <label className="checkbox-label text-lg color-palette-1">
@@ -52,14 +83,18 @@ export default function CheckoutConfirmation() {
         <span className="checkmark" />
       </label>
       <div className="d-md-block d-flex flex-column w-100 pt-50">
-        <button
-          className="btn btn-confirm-payment rounded-pill fw-medium text-white border-0 text-lg"
-          type="button"
-          disabled={!checkbox}
-          onClick={onSubmit}
-        >
-          Confirm Transaction
-        </button>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <button
+            className="btn btn-confirm-payment rounded-pill fw-medium text-white border-0 text-lg"
+            type="button"
+            disabled={!checkbox}
+            onClick={onSubmit}
+          >
+            Confirm Transaction
+          </button>
+        )}
       </div>
     </>
   );

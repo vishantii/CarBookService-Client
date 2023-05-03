@@ -2,18 +2,30 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import NumberFormat from "react-number-format";
 import TableRow from "./TableRow";
-import ButtonTab from "./ButtonTab";
 import {
   cancelTransaction,
+  changeSchedule,
   getMemberTransactions,
   updateStatusTransaction,
 } from "../../../services/member";
 import { HistoryTransactionTypes } from "../../../services/data-types";
 import moment from "moment";
+import ModalDialog from "../../molecules/Modal";
+import { getServiceTime } from "../../../services/player";
+import _ from "lodash";
 
 export default function TransactionContent() {
   const [total, setTotal] = useState(0);
   const [transactions, setTransactions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    startDate: "",
+    time: [],
+    times: "",
+  });
+  const [tempData, setTempData] = useState("");
+  const timeCheck = _.isEmpty(formData.time);
+
   const [tab, setTab] = useState("all");
 
   const getMemberTransactionAPI = useCallback(async () => {
@@ -26,14 +38,16 @@ export default function TransactionContent() {
     }
   }, []);
 
+  console.log("trans-->", transactions);
+
   useEffect(() => {
     getMemberTransactionAPI();
   }, [getMemberTransactions]);
 
-  const onTabClick = (value: string) => {
-    setTab(value);
-    getMemberTransactionAPI();
-  };
+  // const onTabClick = (value: string) => {
+  //   setTab(value);
+  //   getMemberTransactionAPI();
+  // };
 
   const onChangeStatus = async (status?: Number, id?: string) => {
     const res = await updateStatusTransaction({ status: status }, id);
@@ -57,24 +71,60 @@ export default function TransactionContent() {
     }
   };
 
+  const onChangeDate = async (dates: any) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      startDate: dates,
+      time: [], // Clear the time array when the date changes
+    }));
+    const convertDate = moment(dates).format("YYYY-MM-DD");
+    const res = await getServiceTime({
+      date: convertDate,
+    });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      time: res.data,
+    }));
+  };
+
+  const onChangeSchedule = async () => {
+    const data: any = {
+      serviceId: tempData,
+      date: moment(formData.startDate).format("YYYY-MM-DD"),
+      time: formData.times,
+    };
+    const res = await changeSchedule(data, tempData);
+    if (res.error) {
+      toast.error(res.message);
+    } else {
+      toast.success("Berhasil Ubah Jadwal");
+      getMemberTransactionAPI();
+      setShowModal(false);
+    }
+    console.log(data);
+  };
+
+  const renderModal = () => {
+    return (
+      <ModalDialog
+        isShow={showModal}
+        hideModal={setShowModal}
+        timeCheck={timeCheck}
+        formData={formData}
+        onChangeDate={onChangeDate}
+        setFormData={setFormData}
+        onSubmit={onChangeSchedule}
+      />
+    );
+  };
+
   return (
     <main className="main-wrapper">
+      {renderModal()}
       <div className="ps-lg-0">
         <h2 className="text-4xl fw-bold color-palette-1 mb-30">
           My Transactions
         </h2>
-        <div className="mb-30">
-          <p className="text-lg color-palette-2 mb-12">You’ve spent</p>
-          <h3 className="text-5xl fw-medium color-palette-1">
-            <NumberFormat
-              value={total}
-              prefix="Rp. "
-              displayType="text"
-              thousandSeparator="."
-              decimalSeparator=","
-            />
-          </h3>
-        </div>
         {/* <div className="row mt-30 mb-20">
           <div className="col-lg-12 col-12 main-content">
             <div id="list_status_title">
@@ -102,9 +152,6 @@ export default function TransactionContent() {
           </div>
         </div> */}
         <div className="latest-transaction">
-          <p className="text-lg fw-medium color-palette-1 mb-14">
-            Latest Transactions
-          </p>
           <div className="main-content main-content-table overflow-auto">
             <table className="table table-borderless">
               <thead>
@@ -118,19 +165,23 @@ export default function TransactionContent() {
                 </tr>
               </thead>
               <tbody id="list_status_item">
-                {transactions.map((item: HistoryTransactionTypes) => (
-                  <TableRow
-                    key={item._id}
-                    id={item._id}
-                    category={item.category}
-                    licensePlate={item.licensePlate}
-                    date={moment(item.chooseDate).format("DD MMMM YYYY")}
-                    times={item.chooseTime}
-                    status={item.status}
-                    onChangeStatus={onChangeStatus}
-                    cancelTransaction={onCancelTransaction}
-                  />
-                ))}
+                {transactions.map((item: HistoryTransactionTypes) => {
+                  return (
+                    <TableRow
+                      key={item._id}
+                      id={item._id}
+                      category={item.category}
+                      licensePlate={item.licensePlate}
+                      date={moment(item.chooseDate).format("DD MMMM YYYY")}
+                      times={item.chooseTime}
+                      status={item.status}
+                      onChangeStatus={onChangeStatus}
+                      cancelTransaction={onCancelTransaction}
+                      setShowModal={setShowModal}
+                      setTempData={setTempData}
+                    />
+                  );
+                })}
               </tbody>
             </table>
           </div>

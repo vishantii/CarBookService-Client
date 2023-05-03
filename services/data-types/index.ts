@@ -65,6 +65,8 @@ export interface CheckoutTypes {
   miles: string;
   notes: string;
   chooseTime: string;
+  spareparts: any;
+  total: string;
 }
 
 export interface HistoryVoucherTopupTypes {
@@ -100,6 +102,7 @@ export interface HistoryTransactionTypes {
   chooseTime: string;
   status: Number;
   bookingNumber: Number;
+  total: number;
 }
 
 export interface TopUpCategoriesTypes {

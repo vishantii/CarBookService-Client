@@ -69,3 +69,13 @@ export async function cancelTransaction(data: FormData) {
     token: true,
   });
 }
+export async function changeSchedule(data: FormData, id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/customers/transactions/${id}/change-date-time`;
+
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    token: true,
+  });
+}

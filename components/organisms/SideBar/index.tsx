@@ -36,7 +36,7 @@ export default function SideBar(props: SideBarProps) {
           <MenuItem title="Home" icon="ic-menu-card" href="/" />
           <MenuItem title="Log Out" icon="ic-menu-logout" onClick={onLogOut} />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </section>
   );
