@@ -1,16 +1,15 @@
 import Image from "next/dist/client/image";
-import Illustration from "./Illustration";
 import Link from "next/dist/client/link";
 
-export default function MainBanner() {
+export default function MainBanner({ onService }) {
   return (
     <section className="jumbotron text-center">
       <h1 className="display-4 title-repair">Car repair at your Services</h1>
       <div className="mt-5">
         <Link href="/service">
-          <a className="btn btn-repair" role="button">
+          <button className="btn btn-repair" role="button" onClick={onService}>
             Repair Now
-          </a>
+          </button>
         </Link>
       </div>
       <div className="mt-5">

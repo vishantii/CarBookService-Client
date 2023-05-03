@@ -1,4 +1,4 @@
-import { useCallback, useEffect, ChangeEvent, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
@@ -10,7 +10,6 @@ import {
 } from "../../../services/player";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import Select from "react-select";
 
 import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
@@ -18,11 +17,6 @@ import { Rupiah } from "../../../Helpers/convertnumber";
 
 interface Part {
   _id: string;
-  name: string;
-  price: number;
-}
-interface Category {
-  _id: any;
   name: string;
   price: number;
 }

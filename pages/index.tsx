@@ -6,11 +6,16 @@ import MainBanner from "../components/organisms/MainBanner";
 import TransactionStep from "../components/organisms/TransactionStep";
 import Story from "../components/organisms/Story";
 import Footer from "../components/organisms/Footer";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   useEffect(() => {
     AOS.init();
   }, []);
+  const onService = () => {
+    router.push("/service");
+  };
   return (
     <>
       <Head>
@@ -31,7 +36,7 @@ export default function Home() {
         <meta property="og:url" content="https://storegg.com" />
       </Head>
       <Navbar />
-      <MainBanner />
+      <MainBanner onService={onService} />
       <TransactionStep />
       <Story />
       <Footer />

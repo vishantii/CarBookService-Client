@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import TableRow from "./TableRow";
 import {
-  cancelTransaction,
   changeSchedule,
   getMemberTransactions,
   updateStatusTransaction,
@@ -14,7 +13,6 @@ import { getServiceTime } from "../../../services/player";
 import _ from "lodash";
 
 export default function TransactionContent() {
-  const [total, setTotal] = useState(0);
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -32,7 +30,6 @@ export default function TransactionContent() {
     if (response.error) {
       toast.error(response.message);
     } else {
-      setTotal(response.data.total);
       setTransactions(response.data);
     }
   }, []);

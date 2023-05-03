@@ -1,7 +1,5 @@
-import { useState } from "react";
 import SideBar from "../../../components/organisms/SideBar";
 import TransactionContent from "../../../components/organisms/TransactionContent";
-import ModalDialog from "../../../components/molecules/Modal";
 
 export default function Transactions() {
   return (
