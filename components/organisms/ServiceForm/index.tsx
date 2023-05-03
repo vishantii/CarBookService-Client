@@ -59,12 +59,12 @@ export default function ServiceForm() {
   const getServiceCategoryAPI = useCallback(async () => {
     const data = await getServiceCategory();
 
-    setCategories(data);
+    setCategories(data.data);
   }, [getServiceCategory]);
 
   const getServiceSparepartAPI = useCallback(async () => {
     const parts = await getServiceSparepart();
-    setAvailableParts(parts);
+    setAvailableParts(parts.data);
   }, [getServiceSparepart]);
 
   const onChangeDate = async (dates: any) => {

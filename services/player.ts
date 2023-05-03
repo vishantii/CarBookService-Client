@@ -15,20 +15,22 @@ export async function getDetailVoucher(id: string) {
 }
 
 export async function getServiceCategory() {
-  const URL = "customers/category";
+  const url = `${ROOT_API}/${API_VERSION}/customers/category`;
 
-  const response = await axios.get(`${ROOT_API}/${API_VERSION}/${URL}`);
-  const axiosResponse = response.data;
-
-  return axiosResponse.data;
+  return callAPI({
+    url,
+    method: "GET",
+    token: true,
+  });
 }
 export async function getServiceSparepart() {
-  const URL = "customers/sparepart";
+  const url = `${ROOT_API}/${API_VERSION}/customers/sparepart`;
 
-  const response = await axios.get(`${ROOT_API}/${API_VERSION}/${URL}`);
-  const axiosResponse = response.data;
-
-  return axiosResponse.data;
+  return callAPI({
+    url,
+    method: "GET",
+    token: true,
+  });
 }
 
 export async function getServiceTime(data: { date: string }) {
