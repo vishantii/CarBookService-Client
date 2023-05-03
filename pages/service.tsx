@@ -3,8 +3,9 @@ import Link from "next/link";
 import ServiceForm from "../components/organisms/ServiceForm";
 import jwtDecode from "jwt-decode";
 import { JWTPayloadTypes, UserTypes } from "../services/data-types";
+import { getServiceCategory, getServiceSparepart } from "../services/player";
 
-export default function Service() {
+export default function Service({ category, spareparts }) {
   return (
     <section className="sign-up mx-auto pt-lg-100 pb-lg-100 pt-30 pb-47">
       <div className="container mx-auto">
@@ -21,7 +22,7 @@ export default function Service() {
               </a>
             </Link>
           </div>
-          <ServiceForm />
+          <ServiceForm categoryData={category} sparepartData={spareparts} />
         </form>
       </div>
     </section>
@@ -51,10 +52,14 @@ export async function getServerSideProps({ req }: GetServerSideProps) {
   const payload: JWTPayloadTypes = jwtDecode(jwtToken);
   const userFromPayload: UserTypes = payload.customer;
   const IMG = process.env.NEXT_PUBLIC_IMG;
+  const dataCategory = await getServiceCategory();
+  const dataSparepart = await getServiceSparepart();
   userFromPayload.avatar = `${IMG}/${userFromPayload.avatar}`;
   return {
     props: {
       user: userFromPayload,
+      category: dataCategory.data,
+      spareparts: dataSparepart.data,
     },
   };
 }

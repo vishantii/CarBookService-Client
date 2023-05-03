@@ -7,9 +7,9 @@ export default function MainBanner({ onService }) {
       <h1 className="display-4 title-repair">Car repair at your Services</h1>
       <div className="mt-5">
         <Link href="/service">
-          <button className="btn btn-repair" role="button" onClick={onService}>
+          <a className="btn btn-repair" role="button" onClick={onService}>
             Repair Now
-          </button>
+          </a>
         </Link>
       </div>
       <div className="mt-5">

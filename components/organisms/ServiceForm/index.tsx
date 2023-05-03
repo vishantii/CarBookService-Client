@@ -2,12 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
-import {
-  getCategoryById,
-  getServiceCategory,
-  getServiceSparepart,
-  getServiceTime,
-} from "../../../services/player";
+import { getCategoryById, getServiceTime } from "../../../services/player";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
@@ -15,17 +10,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 
-interface Part {
-  _id: string;
-  name: string;
-  price: number;
-}
-
 const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
 };
 
-export default function ServiceForm() {
+export default function ServiceForm({ categoryData, sparepartData }) {
   const [formData, setFormData] = useState({
     carBrand: "",
     carType: "",
@@ -40,13 +29,14 @@ export default function ServiceForm() {
     total: 0,
   });
 
-  const [categories, setCategories] = useState([]);
+  console.log("catData-->", categoryData);
+  console.log("spareData-->", sparepartData);
+
   const [catById, setCatById] = useState<any>({
     _id: "",
     name: "",
     price: 0,
   });
-  const [availableParts, setAvailableParts] = useState<Part[]>([]);
   const [selectedParts, setSelectedParts] = useState<string[]>([]);
   const [partQuantities, setPartQuantities] = useState<{
     [id: string]: number;
@@ -55,17 +45,6 @@ export default function ServiceForm() {
   const timeCheck = _.isEmpty(formData.time);
 
   const router = useRouter();
-
-  const getServiceCategoryAPI = useCallback(async () => {
-    const data = await getServiceCategory();
-
-    setCategories(data.data);
-  }, [getServiceCategory]);
-
-  const getServiceSparepartAPI = useCallback(async () => {
-    const parts = await getServiceSparepart();
-    setAvailableParts(parts.data);
-  }, [getServiceSparepart]);
 
   const onChangeDate = async (dates: any) => {
     setFormData((prevFormData) => ({
@@ -92,18 +71,13 @@ export default function ServiceForm() {
     );
   };
 
-  useEffect(() => {
-    getServiceCategoryAPI();
-    getServiceSparepartAPI();
-  }, []);
-
   const onSubmit = () => {
     const date = moment(formData.startDate).format("YYYY-MM-DD");
     const spareParts: any[] = [];
     let totalPrice: any = 0;
 
     selectedParts.forEach((partId: any) => {
-      const part = availableParts.find((p) => p._id === partId);
+      const part = sparepartData.find((p) => p._id === partId);
       if (part) {
         const quantity = partQuantities[partId] ?? 0;
         spareParts.push({
@@ -197,7 +171,7 @@ export default function ServiceForm() {
           value={selectedParts}
           onChange={handleSelectChange}
         >
-          {availableParts.map((part: any) => (
+          {sparepartData.map((part: any) => (
             <option
               key={part._id}
               value={part._id}
@@ -209,7 +183,7 @@ export default function ServiceForm() {
         </select>
 
         {selectedParts.map((partId) => {
-          const part = availableParts.find(({ _id }) => _id === partId);
+          const part = sparepartData.find(({ _id }) => _id === partId);
           if (!part) {
             return null;
           }
@@ -314,7 +288,7 @@ export default function ServiceForm() {
           }}
         >
           <option value="">Select Category</option>
-          {categories.map((category: CategoryTypes) => (
+          {categoryData.map((category: CategoryTypes) => (
             <option value={category._id} key={category._id}>
               {category.name}
             </option>
