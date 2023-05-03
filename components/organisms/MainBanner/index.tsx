@@ -7,7 +7,7 @@ export default function MainBanner() {
     <section className="jumbotron text-center">
       <h1 className="display-4 title-repair">Car repair at your Services</h1>
       <div className="mt-5">
-        <Link href={"/service"}>
+        <Link href="/service">
           <a className="btn btn-repair" href="#" role="button">
             Repair Now
           </a>
