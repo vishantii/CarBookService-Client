@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "start": "react-scripts --openssl-legacy-provider next start",
+    "build": "react-scripts --openssl-legacy-provider next build",
     "storybook": "start-storybook -s ./public -p 6006",
     "build-storybook": "build-storybook"
   },
@@ -24,6 +24,7 @@
     "react-datepicker": "^4.11.0",
     "react-dom": "17.0.2",
     "react-number-format": "^4.6.3",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.7.2",
     "react-toastify": "^7.0.4"
   },
