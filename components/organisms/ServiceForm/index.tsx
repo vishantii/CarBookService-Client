@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
 import { getCategoryById, getServiceTime } from "../../../services/player";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -330,7 +331,7 @@ export default function ServiceForm({ categoryData, sparepartData }) {
           >
             <option value="">Select Time</option>
             {formData.time.map((time: any) => (
-              <option key={time.id} value={time.time}>
+              <option key={time._id} value={time.time}>
                 {time.available && time.time}
               </option>
             ))}
