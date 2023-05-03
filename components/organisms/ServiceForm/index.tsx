@@ -146,7 +146,7 @@ export default function ServiceForm({ categoryData, sparepartData }) {
 
       // Filter out already selected parts
       const newSelectedParts = selectedIds.filter(
-        (partId: string) => !partQuantities.hasOwnProperty(partId)
+        (partId) => !partQuantities.hasOwnProperty(partId)
       );
 
       // Add new parts with default quantity of 1
