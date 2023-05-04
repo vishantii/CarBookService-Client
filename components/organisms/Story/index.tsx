@@ -29,7 +29,7 @@ export default function Story() {
         <h2 className="text-4xl fw-bold color-palette-1 text-center mb-30">
           Our Services
         </h2>
-        <div className="row gap-lg-0 gap-4">
+        <div className="row gap-lg-0 gap-4" data-aos="fade-up">
           {renderCard("General Services", "services1", 100, 90)}
           {renderCard("Denting & Painting Services", "services2", 100, 90)}
           {renderCard("Major Services", "services3", 100, 90)}

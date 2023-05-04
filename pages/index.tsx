@@ -5,9 +5,14 @@ import TransactionStep from "../components/organisms/TransactionStep";
 import Story from "../components/organisms/Story";
 import Footer from "../components/organisms/Footer";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import Aos from "aos";
 
 export default function Home() {
   const router = useRouter();
+  useEffect(() => {
+    Aos.init();
+  }, []);
 
   const onService = () => {
     return router.push("/service");
@@ -15,10 +20,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        {/* <title>Bring your car here & Let see what happen</title>
+        <title>Bring your car here & Let see what happen</title>
         <meta
           name="description"
-          content="Kami menyediakan jutaan cara untuk membantu players menjadi pemenang sejati"
+          content="Kami menyediakan cara untuk membuat mobil anda berjalan seperti biasanya"
         />
         <meta
           property="og:title"
@@ -29,7 +34,7 @@ export default function Home() {
           content="Kami menyediakan jutaan cara untuk membantu players menjadi pemenang sejati"
         />
         <meta property="og:image" content="https://imageurlkalian" />
-        <meta property="og:url" content="https://storegg.com" /> */}
+        <meta property="og:url" content="https://storegg.com" />
       </Head>
       <Navbar />
       <MainBanner onService={onService} />
