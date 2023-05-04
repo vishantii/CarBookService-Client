@@ -128,10 +128,10 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
 
     return (
       <div className="pt-30">
-        <label className={className.label}>Kategori Service</label>
+        <label className={className.label}>Pilih Mobil</label>
         <select
-          name="categories"
-          id="categories"
+          name="cars"
+          id="cars"
           className="form-control rounded-pill text-lg category-select p-3"
           onChange={(event) => {
             onSelectCar(event.target.value);
@@ -303,7 +303,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
         <h2 className="fw-bold text-xl color-palette-1 mb-20">
           Sparepart yang Tersedia
         </h2>
-        <SparePartsList />
+        {SparePartsList()}
       </div>
       <div className="pt-30">
         <label className={className.label}>Pilih Tanggal Service</label>
