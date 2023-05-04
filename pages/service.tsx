@@ -4,23 +4,21 @@ import ServiceForm from "../components/organisms/ServiceForm";
 import jwtDecode from "jwt-decode";
 import { JWTPayloadTypes, UserTypes } from "../services/data-types";
 import { getServiceCategory, getServiceSparepart } from "../services/player";
+import { useRouter } from "next/router";
 
 export default function Service({ category, spareparts }) {
+  const router = useRouter();
+  const onService = () => {
+    return router.push("/");
+  };
   return (
     <section className="sign-up mx-auto pt-lg-100 pb-lg-100 pt-30 pb-47">
       <div className="container mx-auto">
         <form action="">
           <div className="pb-50">
-            <Link href="/">
-              <a className="navbar-brand">
-                <Image
-                  src="/icon/construction.png"
-                  width={60}
-                  height={60}
-                  alt="logo"
-                />
-              </a>
-            </Link>
+            <a href="/" className="text-center" onClick={onService}>
+              <Image src="/icon/construction.png" width={60} height={60} />
+            </a>
           </div>
           <ServiceForm categoryData={category} sparepartData={spareparts} />
         </form>

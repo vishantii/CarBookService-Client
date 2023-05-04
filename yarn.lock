@@ -7852,10 +7852,10 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-1.7.2.tgz#e66be344be2e9ec1d12f1e16a8ca49bf63417f4f"
-  integrity sha512-9H4qeb1ad/7t2QXObV5CCkClnUOcc7vMIAueQVUnThzgCUOyn/OUH8riiMhj7jESxw1RXQ6biMQ7fO5r4Z0AqA==
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -9059,7 +9059,7 @@ react-bootstrap@^2.7.4:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
-react-datepicker@^4.11.0:
+react-datepicker@^4.8.0:
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.11.0.tgz#40e73b4729a284ed206fdb322b8e84eb566e11a3"
   integrity sha512-50n93o7mQwBEhg05tbopjFKgs8qgi8VBCAOMC4VqrKut72eAjESc/wXS/k5hRtnP0oe2FCGw7MJuIwh37wuXOw==

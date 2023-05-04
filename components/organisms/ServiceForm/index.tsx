@@ -7,7 +7,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
-import "react-datepicker/dist/react-datepicker.css";
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 
@@ -61,7 +60,7 @@ export default function ServiceForm({ categoryData, sparepartData }) {
     }));
   };
 
-  const onSelectCategory = async (value) => {
+  const onSelectCategory = async (value: any) => {
     const res = await getCategoryById({ id: value }); // Pass the value directly
     res.data.map((item: any) =>
       setCatById({
