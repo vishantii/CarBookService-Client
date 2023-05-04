@@ -155,15 +155,15 @@ export default function TransactionDetailContent(props: any) {
                   </h2>
                   <p className="text-lg color-palette-1 mb-20">
                     Merk Mobil
-                    <span className="purchase-details">{data.carBrand}</span>
+                    <span className="purchase-details">{data.cars.make}</span>
                   </p>
                   <p className="text-lg color-palette-1 mb-20">
                     Tipe Mobil{" "}
-                    <span className="purchase-details">{data.carType}</span>
+                    <span className="purchase-details">{data.cars.model}</span>
                   </p>
                   <p className="text-lg color-palette-1 mb-20">
                     Tahun Mobil
-                    <span className="purchase-details">{data.carYear}</span>
+                    <span className="purchase-details">{data.cars.year}</span>
                   </p>
 
                   <p className="text-lg color-palette-1 mb-20">
