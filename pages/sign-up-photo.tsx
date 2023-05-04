@@ -19,7 +19,7 @@ export default function SignUpPhoto() {
   }, []);
 
   const onSubmit = async () => {
-    const getLocalForm = await localStorage.getItem("user-form");
+    const getLocalForm = localStorage.getItem("user-form");
     const form = JSON.parse(getLocalForm!);
     const data = new FormData();
 
@@ -28,11 +28,14 @@ export default function SignUpPhoto() {
     data.append("name", form.name);
     data.append("password", form.password);
     data.append("username", form.name);
-    data.append("phoneNumber", "08123456789");
+    data.append("phoneNumber", form.phoneNumber);
+    data.append("address", form.address);
     data.append("role", "user");
     data.append("status", "Y");
 
-    const result = await setSignUp(data);
+    console.log("data-->", localForm);
+
+    const result = await setSignUp(localForm);
     if (result.error) {
       toast.error(result.message);
     } else {

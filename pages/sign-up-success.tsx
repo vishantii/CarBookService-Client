@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { useEffect } from 'react';
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function SignUpSuccess() {
   // [CODE UPDATE] saya menambahkan remove user-form disini
   useEffect(() => {
-    localStorage.removeItem('user-form');
+    localStorage.removeItem("user-form");
   }, []);
   return (
     <section className="sign-up-success mx-auto pt-md-179 pb-md-179 pt-150 pb-100">
@@ -188,14 +188,12 @@ export default function SignUpSuccess() {
           </svg>
         </div>
         <div className="pt-70 pb-md-50 pb-150">
-          <h2 className="text-4xl fw-bold text-center color-palette-1 mb-10">Well Done!</h2>
+          <h2 className="text-4xl fw-bold text-center color-palette-1 mb-10">
+            Well Done!
+          </h2>
           <p className="text-lg text-center color-palette-1 m-0">
-            Kamu sudah bisa melakukan top up
-            <br
-              className="d-sm-block d-none"
-            />
-            dan menjadi pemenang!
-
+            Kamu sudah bisa melakukan Servis
+            <br className="d-sm-block d-none" />
           </p>
         </div>
         <div className="button-group d-flex flex-column mx-auto">
@@ -204,7 +202,7 @@ export default function SignUpSuccess() {
               className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
               role="button"
             >
-              Top Up
+              Ayo Servis
             </a>
           </Link>
         </div>
