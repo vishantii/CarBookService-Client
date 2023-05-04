@@ -4,13 +4,17 @@ import NumberFormat from "react-number-format";
 
 export default function CheckoutDetail() {
   const [dataService, setDataService] = useState({
-    carBrand: "",
-    carType: "",
-    carYear: "",
     catById: {
       id: "",
       name: "",
       price: "",
+    },
+    carById: {
+      id: "",
+      make: "",
+      model: "",
+      category: "",
+      year: "",
     },
     licensePlate: "",
     date: "",
@@ -113,15 +117,15 @@ export default function CheckoutDetail() {
         </h2>
         <p className="text-lg color-palette-1 mb-20">
           Merk Mobil
-          <span className="purchase-details">{dataService.carBrand}</span>
+          <span className="purchase-details">{dataService.carById.make}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
           Tipe Mobil{" "}
-          <span className="purchase-details">{dataService.carType}</span>
+          <span className="purchase-details">{dataService.carById.model}</span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
           Tahun Mobil
-          <span className="purchase-details">{dataService.carYear}</span>
+          <span className="purchase-details">{dataService.carById.year}</span>
         </p>
 
         <p className="text-lg color-palette-1 mb-20">

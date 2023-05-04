@@ -9,6 +9,7 @@ import moment from "moment";
 
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
+import { getCarById } from "../../../services/player";
 
 const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
@@ -16,9 +17,6 @@ const className = {
 
 export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   const [formData, setFormData] = useState({
-    carBrand: "",
-    carType: "",
-    carYear: "",
     miles: "",
     licensePlate: "",
     startDate: "",
@@ -30,6 +28,11 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   });
 
   const [catById, setCatById] = useState<any>({
+    _id: "",
+    name: "",
+    price: 0,
+  });
+  const [carById, setCarById] = useState<any>({
     _id: "",
     name: "",
     price: 0,
@@ -93,6 +96,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
       ...formData,
       date,
       catById,
+      carById,
       spareparts: spareParts,
       total: finalPrice,
     };
@@ -106,6 +110,42 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
       ...formData,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const renderCarList = () => {
+    const onSelectCar = async (value: any) => {
+      const res = await getCarById({ id: value }); // Pass the value directly
+      res.data.map((item: any) =>
+        setCarById({
+          id: item._id,
+          make: item.Make,
+          model: item.Model,
+          category: item.Category,
+          year: item.Year,
+        })
+      );
+    };
+
+    return (
+      <div className="pt-30">
+        <label className={className.label}>Kategori Service</label>
+        <select
+          name="categories"
+          id="categories"
+          className="form-control rounded-pill text-lg category-select p-3"
+          onChange={(event) => {
+            onSelectCar(event.target.value);
+          }}
+        >
+          <option value="">Select Cars</option>
+          {carsData.map((car: any) => (
+            <option value={car._id} key={car._id}>
+              {car.Year}-{car.Make} - {car.Model} - {car.Category}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
   };
 
   const SparePartsList = () => {
@@ -218,40 +258,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   return (
     <>
       <h2 className="text-4xl fw-bold color-palette-1 mb-10">Service Form</h2>
-      <div className="pt-50">
-        <label className={className.label}>Merek Mobil</label>
-        <input
-          type="text"
-          className="form-control rounded-pill text-lg"
-          aria-describedby="name"
-          placeholder="Enter your Car Brand"
-          name="carBrand"
-          value={formData.carBrand}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="pt-30">
-        <label className={className.label}>Tipe Mobil</label>
-        <input
-          type="email"
-          className="form-control rounded-pill text-lg"
-          placeholder="Enter your Car Type"
-          name="carType"
-          value={formData.carType}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="pt-30">
-        <label className={className.label}>Tahun Mobil</label>
-        <input
-          type="text"
-          className="form-control rounded-pill text-lg"
-          placeholder="Enter Car Year"
-          name="carYear"
-          value={formData.carYear}
-          onChange={handleChange}
-        />
-      </div>
+      {renderCarList()}
       <div className="pt-30">
         <label className={className.label}>Jarak Tempuh</label>
         <input
@@ -353,9 +360,6 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
           className="btn btn-sign-up fw-medium text-lg text-white rounded-pill"
           disabled={
             timeCheck ||
-            !formData.carBrand ||
-            !formData.carType ||
-            !formData.carYear ||
             !formData.miles ||
             !formData.licensePlate ||
             !formData.startDate ||
