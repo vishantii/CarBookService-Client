@@ -17,9 +17,7 @@ export default function CheckoutConfirmation() {
 
     const dataItemLocal = localStorage.getItem("service-form");
     const {
-      carBrand,
-      carType,
-      carYear,
+      carById,
       miles,
       catById,
       licensePlate,
@@ -31,15 +29,19 @@ export default function CheckoutConfirmation() {
     } = JSON.parse(dataItemLocal!);
 
     const data: any = {
-      carBrand,
-      carType,
-      carYear,
-      miles,
+      cars: {
+        id: carById.id,
+        make: carById.make,
+        model: carById.model,
+        category: carById.category,
+        year: carById.year,
+      },
       category: {
         id: catById.id,
         name: catById.name,
         price: catById.price,
       },
+      miles,
       licensePlate,
       chooseDate: date,
       chooseTime: times,
