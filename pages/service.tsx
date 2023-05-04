@@ -3,10 +3,14 @@ import Link from "next/link";
 import ServiceForm from "../components/organisms/ServiceForm";
 import jwtDecode from "jwt-decode";
 import { JWTPayloadTypes, UserTypes } from "../services/data-types";
-import { getServiceCategory, getServiceSparepart } from "../services/player";
+import {
+  getAllCars,
+  getServiceCategory,
+  getServiceSparepart,
+} from "../services/player";
 import { useRouter } from "next/router";
 
-export default function Service({ category, spareparts }) {
+export default function Service({ category, spareparts, cars }) {
   const router = useRouter();
   const onService = () => {
     return router.push("/");
@@ -17,25 +21,26 @@ export default function Service({ category, spareparts }) {
         <form action="">
           <div className="pb-50">
             <a href="/" className="text-center" onClick={onService}>
-              <Image src="/icon/construction.png" width={60} height={60} />
+              <Image
+                alt="logo"
+                src="/icon/construction.png"
+                width={60}
+                height={60}
+              />
             </a>
           </div>
-          <ServiceForm categoryData={category} sparepartData={spareparts} />
+          <ServiceForm
+            categoryData={category}
+            sparepartData={spareparts}
+            carsData={cars}
+          />
         </form>
       </div>
     </section>
   );
 }
 
-interface GetServerSideProps {
-  req: {
-    cookies: {
-      token: string;
-    };
-  };
-}
-
-export async function getServerSideProps({ req }: GetServerSideProps) {
+export async function getServerSideProps({ req }) {
   const { token } = req.cookies;
   if (!token) {
     return {
@@ -52,12 +57,14 @@ export async function getServerSideProps({ req }: GetServerSideProps) {
   const IMG = process.env.NEXT_PUBLIC_IMG;
   const dataCategory = await getServiceCategory();
   const dataSparepart = await getServiceSparepart();
+  const dataCars = await getAllCars();
   userFromPayload.avatar = `${IMG}/${userFromPayload.avatar}`;
   return {
     props: {
       user: userFromPayload,
       category: dataCategory.data,
       spareparts: dataSparepart.data,
+      cars: dataCars.data,
     },
   };
 }

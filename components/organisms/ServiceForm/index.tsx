@@ -14,7 +14,7 @@ const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
 };
 
-export default function ServiceForm({ categoryData, sparepartData }) {
+export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   const [formData, setFormData] = useState({
     carBrand: "",
     carType: "",
@@ -28,9 +28,6 @@ export default function ServiceForm({ categoryData, sparepartData }) {
     catById: {},
     total: 0,
   });
-
-  console.log("catData-->", categoryData);
-  console.log("spareData-->", sparepartData);
 
   const [catById, setCatById] = useState<any>({
     _id: "",

@@ -23,6 +23,15 @@ export async function getServiceCategory() {
     token: true,
   });
 }
+export async function getAllCars() {
+  const url = `${ROOT_API}/${API_VERSION}/customers/carmake`;
+
+  return callAPI({
+    url,
+    method: "GET",
+    token: true,
+  });
+}
 export async function getServiceSparepart() {
   const url = `${ROOT_API}/${API_VERSION}/customers/sparepart`;
 
@@ -54,8 +63,18 @@ export async function getCategoryById(data: { id: string }) {
     token: true,
   });
 }
+export async function getCarById(data: { id: string }) {
+  const url = `${ROOT_API}/${API_VERSION}/customers/carmake/byId`;
 
-export async function setCheckout(data: CheckoutTypes) {
+  return callAPI({
+    url,
+    method: "POST",
+    data,
+    token: true,
+  });
+}
+
+export async function setCheckout(data: { data: any }) {
   const url = `${ROOT_API}/${API_VERSION}/customers/checkout`;
 
   return callAPI({

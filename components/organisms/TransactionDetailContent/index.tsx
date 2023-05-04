@@ -52,7 +52,6 @@ export default function TransactionDetailContent(props: any) {
       </p>
     );
   };
-  console.log("data-->", data);
   const renderSparepartList = () => {
     return (
       <div className="sparepart pt-50">

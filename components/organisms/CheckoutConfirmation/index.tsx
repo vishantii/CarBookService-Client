@@ -30,7 +30,7 @@ export default function CheckoutConfirmation() {
       total,
     } = JSON.parse(dataItemLocal!);
 
-    const data: CheckoutTypes = {
+    const data: any = {
       carBrand,
       carType,
       carYear,
@@ -59,8 +59,7 @@ export default function CheckoutConfirmation() {
         setCheckout(data),
       ]).then((res) => {
         if (res) {
-          console.log("res-->", res);
-          return router.push("/complete-checkout");
+          return router.replace("/complete-checkout");
         }
       });
     } catch (error) {

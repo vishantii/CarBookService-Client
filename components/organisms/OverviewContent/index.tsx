@@ -29,8 +29,6 @@ export default function OverviewContent() {
     getMemberOverviewAPI();
   }, []);
 
-  console.log(data);
-
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">

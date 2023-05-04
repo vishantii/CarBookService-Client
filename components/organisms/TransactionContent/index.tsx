@@ -34,8 +34,6 @@ export default function TransactionContent() {
     }
   }, []);
 
-  console.log("trans-->", transactions);
-
   useEffect(() => {
     getMemberTransactionAPI();
   }, [getMemberTransactions]);
@@ -84,7 +82,6 @@ export default function TransactionContent() {
       getMemberTransactionAPI();
       setShowModal(false);
     }
-    console.log(data);
   };
 
   const renderModal = () => {

@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
+import axios, { AxiosRequestConfig } from "axios";
+import Cookies from "js-cookie";
 
 interface CallAPIProps extends AxiosRequestConfig {
   token?: boolean;
@@ -7,44 +7,49 @@ interface CallAPIProps extends AxiosRequestConfig {
 }
 
 export default async function callAPI({
-  url, method, data, token, serverToken,
+  url,
+  method,
+  data,
+  token,
+  serverToken,
 }: CallAPIProps) {
-  let headers = {};
+  const headers: { Authorization?: string } = {};
+
   if (serverToken) {
-    headers = {
-      Authorization: `Bearer ${serverToken}`,
-    };
+    headers.Authorization = `Bearer ${serverToken}`;
   } else if (token) {
-    const tokenCookies = Cookies.get('token');
+    const tokenCookies = Cookies.get("token");
+
     if (tokenCookies) {
       const jwtToken = atob(tokenCookies);
-      headers = {
-        Authorization: `Bearer ${jwtToken}`,
-      };
+      headers.Authorization = `Bearer ${jwtToken}`;
     }
   }
-  const response = await axios({
-    url,
-    method,
-    data,
-    headers,
-  }).catch((err) => err.response);
 
-  if (response.status > 300) {
+  try {
+    const response = await axios({
+      url,
+      method,
+      data,
+      headers,
+    });
+
+    const { data: responseData } = response;
+    const { length } = Object.keys(responseData);
+    const res = {
+      error: false,
+      message: "success",
+      data: length > 1 ? responseData : responseData.data,
+    };
+
+    return res;
+  } catch (error: any) {
     const res = {
       error: true,
-      message: response.data.message,
+      message: error.response.data.message,
       data: null,
     };
+
     return res;
   }
-
-  const { length } = Object.keys(response.data);
-  const res = {
-    error: false,
-    message: 'success',
-    data: length > 1 ? response.data : response.data.data,
-  };
-
-  return res;
 }

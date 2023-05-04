@@ -10,6 +10,7 @@ export default function MainBanner({ onService }) {
         </a>
       </div>
       <Image
+        alt="logo"
         src="/img/landing.png"
         width={1438}
         height={466}
