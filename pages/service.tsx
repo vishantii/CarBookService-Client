@@ -18,23 +18,21 @@ export default function Service({ category, spareparts, cars }) {
   return (
     <section className="sign-up mx-auto pt-lg-100 pb-lg-100 pt-30 pb-47">
       <div className="container mx-auto">
-        <form action="">
-          <div className="pb-50">
-            <a href="/" className="text-center" onClick={onService}>
-              <Image
-                alt="logo"
-                src="/icon/construction.png"
-                width={60}
-                height={60}
-              />
-            </a>
-          </div>
-          <ServiceForm
-            categoryData={category}
-            sparepartData={spareparts}
-            carsData={cars}
-          />
-        </form>
+        <div className="pb-50">
+          <a href="/" className="text-center" onClick={onService}>
+            <Image
+              alt="logo"
+              src="/icon/construction.png"
+              width={60}
+              height={60}
+            />
+          </a>
+        </div>
+        <ServiceForm
+          categoryData={category}
+          sparepartData={spareparts}
+          carsData={cars}
+        />
       </div>
     </section>
   );

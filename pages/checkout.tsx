@@ -8,7 +8,12 @@ export default function Checkout() {
       <div className="container-fluid">
         <div className="logo text-md-center text-start pb-50">
           <a className="" href="/#">
-            <Image src="/icon/logo.svg" width={60} height={60} alt="logo" />
+            <Image
+              src="/icon/construction.png"
+              width={60}
+              height={60}
+              alt="logo"
+            />
           </a>
         </div>
         <div className="title-text pt-md-50 pt-0">

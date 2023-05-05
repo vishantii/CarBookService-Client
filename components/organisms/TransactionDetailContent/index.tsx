@@ -3,9 +3,6 @@ import moment from "moment";
 import NumberFormat from "react-number-format";
 import { setInvoice } from "../../../services/player";
 
-interface TransactionDetailContentProps {
-  data: HistoryTransactionTypes;
-}
 export default function TransactionDetailContent(props: any) {
   const { data } = props;
 
@@ -175,25 +172,17 @@ export default function TransactionDetailContent(props: any) {
                   {renderTotal()}
                 </div>
               </>
-
-              <div className="d-md-block d-flex flex-column w-100">
-                <a
-                  className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
-                  href="#"
-                  role="button"
-                >
-                  WhatsApp ke Admin
-                </a>
-              </div>
-              <div className="d-md-block d-flex flex-column w-100 pt-4">
-                <button
-                  onClick={onGenerateInvoice}
-                  className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
-                  role="button"
-                >
-                  Download Invoice
-                </button>
-              </div>
+              {data?.status === 3 ? (
+                <div className="d-md-block d-flex flex-column w-100 pt-4">
+                  <button
+                    onClick={onGenerateInvoice}
+                    className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
+                    role="button"
+                  >
+                    Download Invoice
+                  </button>
+                </div>
+              ) : null}
             </section>
           </div>
         </div>
