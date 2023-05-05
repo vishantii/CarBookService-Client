@@ -88,7 +88,7 @@ export default function CheckoutConfirmation() {
           <p>Loading...</p>
         ) : (
           <button
-            className="btn btn-confirm-payment rounded-pill fw-medium text-white border-0 text-lg"
+            className="btn btn-confirm-payment rounded-pill fw-medium text-white border-0 text-lg "
             type="button"
             disabled={!checkbox}
             onClick={onSubmit}
