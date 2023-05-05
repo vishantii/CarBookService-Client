@@ -1,18 +1,9 @@
-import { HistoryTransactionTypes } from "../../../services/data-types";
 import moment from "moment";
 import NumberFormat from "react-number-format";
-import { setInvoice } from "../../../services/player";
+import { downloadInvoice } from "../../../utils/invoice";
 
 export default function TransactionDetailContent(props: any) {
   const { data } = props;
-
-  const onGenerateInvoice = async () => {
-    try {
-      await setInvoice(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const statusDesc = (status: Number) => {
     if (status === 0) {
@@ -175,7 +166,7 @@ export default function TransactionDetailContent(props: any) {
               {data?.status === 3 ? (
                 <div className="d-md-block d-flex flex-column w-100 pt-4">
                   <button
-                    onClick={onGenerateInvoice}
+                    onClick={() => downloadInvoice(data)}
                     className="btn btn-whatsapp rounded-pill fw-medium text-white border-0 text-lg"
                     role="button"
                   >
