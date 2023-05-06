@@ -39,7 +39,7 @@ export async function getTransactionDetail(id: string, token: string) {
   });
 }
 
-export async function updateProfile(data: FormData, id: string) {
+export async function updateProfile(data: any, id: string) {
   const url = `${ROOT_API}/${API_VERSION}/customers/profile/${id}`;
 
   return callAPI({

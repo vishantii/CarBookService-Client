@@ -212,7 +212,9 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
             <option
               key={part._id}
               value={part._id}
-              disabled={part.status === "N"}
+              disabled={
+                part.status === "N" || part.stock === 0 || part.stock === "0"
+              }
             >
               {part.name} - {Rupiah(part.price)}
             </option>
