@@ -8,20 +8,9 @@ import Input from "../../components/atoms/Input";
 import { JWTPayloadTypes, UserTypes } from "../../services/data-types";
 import { updateProfile } from "../../services/member";
 
-interface UserStateTypes {
-  id: string;
-  name: string;
-  email: string;
-  avatar: any;
-}
-
 export default function EditProfile() {
-  const [user, setUser] = useState<UserStateTypes>({
-    id: "",
-    name: "",
-    email: "",
-    avatar: "",
-  });
+  const [user, setUser] = useState<any>({});
+  const [name, setName] = useState("");
   const [imagePreview, setImagePreview] = useState("/");
   const router = useRouter();
 
@@ -29,6 +18,7 @@ export default function EditProfile() {
     const token = Cookies.get("token");
     if (token) {
       const jwtToken = atob(token);
+      console.log("token-->", jwtToken);
       const payload: JWTPayloadTypes = jwtDecode(jwtToken);
       const userFromPayload: UserTypes = payload.customer;
       setUser(userFromPayload);
@@ -36,13 +26,12 @@ export default function EditProfile() {
   }, []);
 
   const onSubmit = async () => {
-    const data = new FormData();
-
-    data.append("image", user.avatar);
-    data.append("name", user.name);
+    const data = {
+      name: name,
+    };
     const response = await updateProfile(data, user.id);
     if (response.error) {
-      toast.error(response.message);
+      toast.error("Error");
     } else {
       Cookies.remove("token");
       router.push("/sign-in");
@@ -98,7 +87,7 @@ export default function EditProfile() {
                   label="Full Name"
                   value={user.name}
                   onChange={(event) =>
-                    setUser({
+                    setName({
                       ...user,
                       name: event.target.value,
                     })

@@ -94,7 +94,7 @@ export default function SignUpPhoto() {
               </p>
             </div>
 
-            <div className="button-group d-flex flex-column mx-auto">
+            <div className="button-group d-flex flex-column mx-auto pt-4">
               <button
                 type="button"
                 className="btn btn-create fw-medium text-lg text-white rounded-pill mb-16"
