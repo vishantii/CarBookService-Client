@@ -140,7 +140,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
           <option value="">Select Cars</option>
           {carsData.map((car: any) => (
             <option value={car._id} key={car._id}>
-              {car.Year}-{car.Make} - {car.Model} - {car.Category}
+              {car.Year} - {car.Make} - {car.Model} - {car.Category}
             </option>
           ))}
         </select>

@@ -143,7 +143,7 @@ const UploadImageToStorage = () => {
                   <Button
                     loading={isUploading}
                     type="primary"
-                    className="btn-create"
+                    className="btn-create rounded-pill"
                     onClick={handleUploadFile}
                   >
                     Upload
@@ -165,7 +165,8 @@ const UploadImageToStorage = () => {
             )}
             <div className="text-right mt-5 text-center">
               <Button
-                className="btn-create text-white rounded-pill"
+                type="primary"
+                className="btn-create rounded-pill"
                 onClick={onSubmit}
               >
                 Create My Account
