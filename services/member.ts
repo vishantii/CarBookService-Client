@@ -39,16 +39,16 @@ export async function getTransactionDetail(id: string, token: string) {
   });
 }
 
-export async function updateProfile(data: any, id: string) {
-  const url = `${ROOT_API}/${API_VERSION}/customers/profile/${id}`;
-
+export const updateProfile = async (data: any, id: string) => {
+  const url = `${ROOT_API}/${API_VERSION}/customers/profile`;
   return callAPI({
-    url,
     method: "PUT",
+    url,
     data,
     token: true,
   });
-}
+};
+
 export async function updateStatusTransaction(
   data: { status: any },
   id: string

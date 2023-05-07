@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['api-bwa-storegg.herokuapp.com'],
+    domains: ["gs://thesis-app-aa717.appspot.com/images"],
   },
 };

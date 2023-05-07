@@ -47,16 +47,15 @@ export default function SideBar(props: SideBarProps) {
             active={activeMenu === "transactions"}
             href="/member/transactions"
           />
-          {/* <MenuItem
-            title="Settings"
+          <MenuItem
+            title="Edit Profile"
             icon="ic-menu-setting"
             active={activeMenu === "settings"}
             href="/member/edit-profile"
-          /> */}
+          />
           <MenuItem title="Home" icon="ic-menu-card" href="/" />
           <MenuItem title="Log Out" icon="ic-menu-logout" onClick={onLogOut} />
         </div>
-        {/* <Footer /> */}
       </div>
     </section>
   );
