@@ -22,6 +22,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { store } from "../utils/redux/store";
 import { Provider } from "react-redux";
+import "antd/dist/antd.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
