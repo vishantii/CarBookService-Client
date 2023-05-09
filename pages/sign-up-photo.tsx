@@ -29,8 +29,6 @@ const UploadImageToStorage = () => {
   const handleSelectedFile = (files: any) => {
     if (files && files[0].size < 10000000) {
       setImageFile(files[0]);
-
-      console.log(files[0]);
     } else {
       message.error("File size to large");
     }
@@ -90,8 +88,6 @@ const UploadImageToStorage = () => {
     data.append("address", form.address);
     data.append("role", "user");
     data.append("status", "Y");
-
-    console.log("data-->", localForm);
 
     const result = await setSignUp(data);
     if (result.error) {

@@ -46,15 +46,25 @@ const ModalDialog = ({
                   setFormData({
                     ...formData,
                     times: event.target.value,
+                    timeId:
+                      event.target.options[
+                        event.target.selectedIndex
+                      ].getAttribute("data-time-id"),
                   });
                 }}
               >
                 <option value="">Select Time</option>
-                {formData.time.map((time: any) => (
-                  <option key={time.id} value={time.time}>
-                    {time.available && time.time}
-                  </option>
-                ))}
+                {formData.time.map((time: any) => {
+                  return (
+                    <option
+                      key={time._id}
+                      value={time.time}
+                      data-time-id={time._id}
+                    >
+                      {time.available && time.time}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           ) : null}

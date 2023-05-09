@@ -39,8 +39,8 @@ export async function getTransactionDetail(id: string, token: string) {
   });
 }
 
-export const updateProfile = async (data: any, id: string) => {
-  const url = `${ROOT_API}/${API_VERSION}/customers/profile`;
+export const updateProfile = async (data: FormData, id: string) => {
+  const url = `${ROOT_API}/${API_VERSION}/players/profile/${id}`;
   return callAPI({
     method: "PUT",
     url,
@@ -77,7 +77,7 @@ export async function changeSchedule(data: FormData, id: string) {
 
   return callAPI({
     url,
-    method: "POST",
+    method: "PUT",
     data,
     token: true,
   });

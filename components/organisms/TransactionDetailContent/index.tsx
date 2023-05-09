@@ -5,8 +5,6 @@ import { downloadInvoice } from "../../../utils/invoice";
 export default function TransactionDetailContent(props: any) {
   const { data } = props;
 
-  console.log("data-->", data);
-
   const statusDesc = (status: Number) => {
     if (status === 0) {
       return (
