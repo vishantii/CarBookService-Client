@@ -41,7 +41,7 @@ const ModalDialog = ({
               <select
                 name="times"
                 id="times"
-                className="form-control rounded-pill text-lg category-select p-3"
+                className="form-control rounded-pill text-lg category-select p-2"
                 onChange={(event) => {
                   setFormData({
                     ...formData,
@@ -73,7 +73,7 @@ const ModalDialog = ({
           <Button variant="danger" onClick={() => hideModal(false)}>
             Cancel
           </Button>
-          <Button variant="dark" onClick={onSubmit}>
+          <Button className="btn btn-sign-up" onClick={onSubmit}>
             Submit
           </Button>
         </Modal.Footer>
