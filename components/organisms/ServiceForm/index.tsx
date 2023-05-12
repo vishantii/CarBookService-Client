@@ -10,6 +10,7 @@ import moment from "moment";
 import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 import { getCarById } from "../../../services/player";
+import Select from "react-select";
 
 const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
@@ -113,8 +114,15 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   };
 
   const renderCarList = () => {
+    const [selectedCar, setSelectedCar] = useState(null);
+
+    const carOptions = carsData.map((car: any) => ({
+      label: `${car.Year} - ${car.Make} - ${car.Model} - ${car.Category}`,
+      value: car._id,
+    }));
+
     const onSelectCar = async (value: any) => {
-      const res = await getCarById({ id: value }); // Pass the value directly
+      const res = await getCarById({ id: value });
       res.data.map((item: any) =>
         setCarById({
           id: item._id,
@@ -126,24 +134,41 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
       );
     };
 
+    const handleChange = (selectedOption: any) => {
+      setSelectedCar(selectedOption);
+      onSelectCar(selectedOption.value);
+    };
+
     return (
       <div className="pt-30">
         <label className={className.label}>Pilih Mobil</label>
-        <select
-          name="cars"
-          id="cars"
-          className="form-control rounded-pill text-lg category-select p-3"
-          onChange={(event) => {
-            onSelectCar(event.target.value);
+        <Select
+          value={selectedCar}
+          onChange={handleChange}
+          options={carOptions}
+          isSearchable={true}
+          placeholder="Select Cars"
+          styles={{
+            control: (provided, state) => ({
+              ...provided,
+              backgroundColor: "white",
+              borderColor: "#0c145a",
+              borderRadius: "50px",
+              "&:hover": {
+                borderColor: "gray",
+              },
+              padding: "0.6rem",
+              fontSize: 16,
+              boxShadow: state.isFocused
+                ? "0 0 0 0.2rem rgba(0, 123, 255, 0.25)"
+                : "",
+            }),
+            menu: (provided, state) => ({
+              ...provided,
+              zIndex: 2,
+            }),
           }}
-        >
-          <option value="">Select Cars</option>
-          {carsData.map((car: any) => (
-            <option value={car._id} key={car._id}>
-              {car.Year}-{car.Make} - {car.Model} - {car.Category}
-            </option>
-          ))}
-        </select>
+        />
       </div>
     );
   };
@@ -212,7 +237,9 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
             <option
               key={part._id}
               value={part._id}
-              disabled={part.status === "N"}
+              disabled={
+                part.status === "N" || part.stock === 0 || part.stock === "0"
+              }
             >
               {part.name} - {Rupiah(part.price)}
             </option>

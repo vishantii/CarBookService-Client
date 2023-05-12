@@ -41,20 +41,30 @@ const ModalDialog = ({
               <select
                 name="times"
                 id="times"
-                className="form-control rounded-pill text-lg category-select p-3"
+                className="form-control rounded-pill text-lg category-select p-2"
                 onChange={(event) => {
                   setFormData({
                     ...formData,
                     times: event.target.value,
+                    timeId:
+                      event.target.options[
+                        event.target.selectedIndex
+                      ].getAttribute("data-time-id"),
                   });
                 }}
               >
                 <option value="">Select Time</option>
-                {formData.time.map((time: any) => (
-                  <option key={time.id} value={time.time}>
-                    {time.available && time.time}
-                  </option>
-                ))}
+                {formData.time.map((time: any) => {
+                  return (
+                    <option
+                      key={time._id}
+                      value={time.time}
+                      data-time-id={time._id}
+                    >
+                      {time.available && time.time}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           ) : null}
@@ -63,7 +73,7 @@ const ModalDialog = ({
           <Button variant="danger" onClick={() => hideModal(false)}>
             Cancel
           </Button>
-          <Button variant="dark" onClick={onSubmit}>
+          <Button className="btn btn-sign-up" onClick={onSubmit}>
             Submit
           </Button>
         </Modal.Footer>

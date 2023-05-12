@@ -74,7 +74,7 @@ export async function getCarById(data: { id: string }) {
   });
 }
 
-export async function setCheckout(data: { data: any }) {
+export async function setCheckout(data: { data: CheckoutTypes }) {
   const url = `${ROOT_API}/${API_VERSION}/customers/checkout`;
 
   return callAPI({

@@ -19,6 +19,7 @@ export default function TransactionContent() {
     startDate: "",
     time: [],
     times: "",
+    timeId: "",
   });
   const [tempData, setTempData] = useState("");
   const timeCheck = _.isEmpty(formData.time);
@@ -70,9 +71,8 @@ export default function TransactionContent() {
 
   const onChangeSchedule = async () => {
     const data: any = {
-      serviceId: tempData,
-      date: moment(formData.startDate).format("YYYY-MM-DD"),
-      time: formData.times,
+      chooseDate: moment(formData.startDate).format("YYYY-MM-DD"),
+      chooseTime: formData.times,
     };
     const res = await changeSchedule(data, tempData);
     if (res.error) {
