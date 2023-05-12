@@ -65,7 +65,6 @@ export default function OverviewContent() {
                     notes={item.notes}
                     licensePlate={item.licensePlate}
                     date={moment(item.chooseDate).format("DD MMMM YYYY")}
-                    times={item.chooseTime}
                     status={item.status}
                   />
                 ))}
