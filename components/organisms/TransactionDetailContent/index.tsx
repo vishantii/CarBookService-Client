@@ -88,10 +88,6 @@ export default function TransactionDetailContent(props: any) {
             {moment(data.date).format("DD MMMM YYYY")}
           </span>
         </p>
-        <p className="text-lg color-palette-1 mb-20">
-          Jam Servis
-          <span className="purchase-details">{data.chooseTime}</span>
-        </p>
       </div>
     );
   };

@@ -23,7 +23,7 @@ export default function TableRow(props: any) {
   const {
     date,
     licensePlate,
-    times,
+    queue,
     status,
     category,
     id,
@@ -122,7 +122,7 @@ export default function TableRow(props: any) {
           <p className="fw-medium text-start color-palette-1 m-0">{date}</p>
         </td>
         <td>
-          <p className="fw-medium text-start color-palette-1 m-0">{times}</p>
+          <p className="fw-medium text-start color-palette-1 m-0">{queue}</p>
         </td>
         <td>
           <div>

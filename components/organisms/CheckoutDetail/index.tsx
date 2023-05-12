@@ -20,7 +20,7 @@ export default function CheckoutDetail() {
     date: "",
     miles: "",
     notes: "",
-    times: "",
+    queue: 0,
     spareparts: [],
     total: "",
   });
@@ -82,8 +82,8 @@ export default function CheckoutDetail() {
           </span>
         </p>
         <p className="text-lg color-palette-1 mb-20">
-          Jam Servis
-          <span className="purchase-details">{dataService.times}</span>
+          Antrian Ke-
+          <span className="purchase-details">{dataService.queue + 1}</span>
         </p>
       </div>
     );

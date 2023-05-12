@@ -10,11 +10,10 @@ const className = {
 const ModalDialog = ({
   isShow,
   hideModal,
-  timeCheck,
   formData,
   onChangeDate,
-  setFormData,
   onSubmit,
+  queue,
 }) => {
   return (
     <>
@@ -34,40 +33,8 @@ const ModalDialog = ({
                 onChangeDate(date);
               }}
             />
+            <label className="pt-1">{`Jumlah Antrian = ${queue}`}</label>
           </div>
-          {!timeCheck ? (
-            <div className="pt-30">
-              <label className={className.label}>Waktu Service</label>
-              <select
-                name="times"
-                id="times"
-                className="form-control rounded-pill text-lg category-select p-2"
-                onChange={(event) => {
-                  setFormData({
-                    ...formData,
-                    times: event.target.value,
-                    timeId:
-                      event.target.options[
-                        event.target.selectedIndex
-                      ].getAttribute("data-time-id"),
-                  });
-                }}
-              >
-                <option value="">Select Time</option>
-                {formData.time.map((time: any) => {
-                  return (
-                    <option
-                      key={time._id}
-                      value={time.time}
-                      data-time-id={time._id}
-                    >
-                      {time.available && time.time}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          ) : null}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={() => hideModal(false)}>

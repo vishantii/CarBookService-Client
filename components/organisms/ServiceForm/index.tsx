@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
@@ -11,6 +11,8 @@ import _ from "lodash";
 import { Rupiah } from "../../../Helpers/convertnumber";
 import { getCarById } from "../../../services/player";
 import Select from "react-select";
+import { getQueue } from "../../../services/member";
+import { toast } from "react-toastify";
 
 const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
@@ -21,8 +23,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
     miles: "",
     licensePlate: "",
     startDate: "",
-    time: [],
-    times: "",
+    queue: 0,
     notes: "",
     catById: {},
     total: 0,
@@ -43,7 +44,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
     [id: string]: number;
   }>({});
 
-  const timeCheck = _.isEmpty(formData.time);
+  // const timeCheck = _.isEmpty(formData.time);
 
   const router = useRouter();
 
@@ -51,13 +52,15 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
     setFormData((prevFormData) => ({
       ...prevFormData,
       startDate: dates,
-      time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime({ date: convertDate });
+    const res = await getQueue({ chooseDate: convertDate, category: catById });
+    if (res.error) {
+      toast.error(res.message);
+    }
     setFormData((prevFormData) => ({
       ...prevFormData,
-      time: res.data,
+      queue: res.data.data,
     }));
   };
 
@@ -343,9 +346,10 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
             onChangeDate(date);
           }}
         />
+        <label className="pt-1">{`Jumlah Antrian = ${formData.queue}`}</label>
       </div>
 
-      {!timeCheck ? (
+      {/* {!timeCheck ? (
         <div className="pt-30">
           <label className={className.label}>Waktu Service</label>
           <select
@@ -367,7 +371,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
             ))}
           </select>
         </div>
-      ) : null}
+      ) : null} */}
 
       <div className="pt-30">
         <label className={className.label}>Catatan</label>
@@ -386,11 +390,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
         <button
           className="btn btn-sign-up fw-medium text-lg text-white rounded-pill"
           disabled={
-            timeCheck ||
-            !formData.miles ||
-            !formData.licensePlate ||
-            !formData.startDate ||
-            !formData.times
+            !formData.miles || !formData.licensePlate || !formData.startDate
           }
           onClick={onSubmit}
         >
