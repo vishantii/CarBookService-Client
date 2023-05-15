@@ -21,6 +21,9 @@ export default function TransactionContent() {
     queue: 0,
   });
   const [tempData, setTempData] = useState("");
+  const [category, setCategory] = useState({});
+
+  console.log("cats-->", category);
 
   // const [tab, setTab] = useState("all");
 
@@ -59,10 +62,10 @@ export default function TransactionContent() {
       startDate: dates,
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getQueue({ chooseDate: convertDate });
+    const res = await getQueue({ chooseDate: convertDate, category });
     setFormData((prevFormData) => ({
       ...prevFormData,
-      queue: res.data,
+      queue: res.data.data,
     }));
   };
 
@@ -153,6 +156,7 @@ export default function TransactionContent() {
                       onChangeStatus={onChangeStatus}
                       setShowModal={setShowModal}
                       setTempData={setTempData}
+                      setCategory={setCategory}
                     />
                   );
                 })}

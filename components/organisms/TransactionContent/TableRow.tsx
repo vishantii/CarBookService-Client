@@ -30,6 +30,7 @@ export default function TableRow(props: any) {
     onChangeStatus,
     setShowModal,
     setTempData,
+    setCategory,
   } = props;
 
   // const statusClass = cx({
@@ -59,6 +60,7 @@ export default function TableRow(props: any) {
             onClick={() => {
               setTempData(id);
               setShowModal(true);
+              setCategory(category);
             }}
           >
             Ubah Jadwal

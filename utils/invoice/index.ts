@@ -73,14 +73,20 @@ export const downloadInvoice = (data: any) => {
 
   autoTable(doc, {
     head: [["Item", "Unit Cost", "Quantity", "Line Total"]],
-    body: data.spareparts.map((item, index) => {
-      return [
+    body: [
+      ...data.spareparts.map((item, index) => [
         item?.sparepartId?.name,
         Rupiah(item?.sparepartId?.price),
         item?.quantity,
         Rupiah(item?.quantity * item?.sparepartId?.price),
-      ];
-    }),
+      ]),
+      [
+        data.category.name,
+        Rupiah(data.category.price),
+        1,
+        Rupiah(data.category.price),
+      ],
+    ],
     theme: "striped",
     styles: {
       fillColor: "#ffffff",
