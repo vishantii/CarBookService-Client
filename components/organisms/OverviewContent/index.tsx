@@ -10,7 +10,7 @@ import TableRow from "./TableRow";
 import moment from "moment";
 
 export default function OverviewContent() {
-  // const [count, setCount] = useState([]);
+  const [category, setCategory] = useState([]);
   const [data, setData] = useState([]);
 
   console;
@@ -55,7 +55,7 @@ export default function OverviewContent() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item: HistoryTransactionTypes) => (
+                {data.map((item: any) => (
                   <TableRow
                     key={item._id}
                     carBrand={item.carBrand}
@@ -65,7 +65,6 @@ export default function OverviewContent() {
                     notes={item.notes}
                     licensePlate={item.licensePlate}
                     date={moment(item.chooseDate).format("DD MMMM YYYY")}
-                    times={item.chooseTime}
                     status={item.status}
                   />
                 ))}

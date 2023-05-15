@@ -5,6 +5,7 @@ import {
   CheckoutTypes,
   TimeDataUpdateTypes,
 } from "../../../services/data-types";
+import { toast } from "react-toastify";
 
 export default function CheckoutConfirmation() {
   const [checkbox, setCheckBox] = useState(false);
@@ -50,26 +51,13 @@ export default function CheckoutConfirmation() {
       total,
     };
 
-    const timeDataUpdate: TimeDataUpdateTypes = {
-      date,
-      time: times,
-    };
-
-    try {
-      await Promise.all([
-        setTimeUpdate(timeDataUpdate),
-        setCheckout(data),
-      ]).then((res) => {
-        if (res) {
-          return router.replace("/complete-checkout");
-        }
-      });
-    } catch (error) {
-      console.error(error);
-      // handle error
-    } finally {
-      setIsLoading(false); // set loading state to false
+    const res = await setCheckout(data);
+    if (res?.error) {
+      toast.error(res?.message ?? "Boooking slot Full");
+      return setIsLoading(false); // set loading state to false
     }
+    setIsLoading(false);
+    return router.replace("/complete-checkout");
   };
 
   return (

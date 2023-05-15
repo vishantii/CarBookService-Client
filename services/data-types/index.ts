@@ -100,7 +100,7 @@ export interface HistoryTransactionTypes {
   licensePlate: string;
   miles: string;
   notes: string;
-  chooseTime: string;
+  queueNumber: Number;
   status: Number;
   bookingNumber: Number;
   total: number;

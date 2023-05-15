@@ -4,6 +4,7 @@ import TableRow from "./TableRow";
 import {
   changeSchedule,
   getMemberTransactions,
+  getQueue,
   updateStatusTransaction,
 } from "../../../services/member";
 import { HistoryTransactionTypes } from "../../../services/data-types";
@@ -17,14 +18,14 @@ export default function TransactionContent() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     startDate: "",
-    time: [],
-    times: "",
-    timeId: "",
+    queue: 0,
   });
   const [tempData, setTempData] = useState("");
-  const timeCheck = _.isEmpty(formData.time);
+  const [category, setCategory] = useState({});
 
-  const [tab, setTab] = useState("all");
+  console.log("cats-->", category);
+
+  // const [tab, setTab] = useState("all");
 
   const getMemberTransactionAPI = useCallback(async () => {
     const response = await getMemberTransactions();
@@ -59,20 +60,18 @@ export default function TransactionContent() {
     setFormData((prevFormData) => ({
       ...prevFormData,
       startDate: dates,
-      time: [], // Clear the time array when the date changes
     }));
     const convertDate = moment(dates).format("YYYY-MM-DD");
-    const res = await getServiceTime({ date: convertDate });
+    const res = await getQueue({ chooseDate: convertDate, category });
     setFormData((prevFormData) => ({
       ...prevFormData,
-      time: res.data,
+      queue: res.data.data,
     }));
   };
 
   const onChangeSchedule = async () => {
     const data: any = {
-      chooseDate: moment(formData.startDate).format("YYYY-MM-DD"),
-      chooseTime: formData.times,
+      newDate: moment(formData.startDate).format("YYYY-MM-DD"),
     };
     const res = await changeSchedule(data, tempData);
     if (res.error) {
@@ -89,11 +88,10 @@ export default function TransactionContent() {
       <ModalDialog
         isShow={showModal}
         hideModal={setShowModal}
-        timeCheck={timeCheck}
         formData={formData}
         onChangeDate={onChangeDate}
-        setFormData={setFormData}
         onSubmit={onChangeSchedule}
+        queue={formData.queue}
       />
     );
   };
@@ -140,7 +138,7 @@ export default function TransactionContent() {
                   <th scope="col">Harga Servis</th>
                   <th scope="col">Nomor Plat</th>
                   <th scope="col">Tanggal </th>
-                  <th scope="col">Jam </th>
+                  <th scope="col">Antrian Ke </th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
@@ -153,11 +151,12 @@ export default function TransactionContent() {
                       category={item.category}
                       licensePlate={item.licensePlate}
                       date={moment(item.chooseDate).format("DD MMMM YYYY")}
-                      times={item.chooseTime}
+                      queue={item.queueNumber}
                       status={item.status}
                       onChangeStatus={onChangeStatus}
                       setShowModal={setShowModal}
                       setTempData={setTempData}
+                      setCategory={setCategory}
                     />
                   );
                 })}
