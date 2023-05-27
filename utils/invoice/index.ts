@@ -9,7 +9,7 @@ export const downloadInvoice = (data: any) => {
     body: [
       [
         {
-          content: "Citra Saputra",
+          content: "Garasi Jogja",
           styles: {
             halign: "left",
             fontSize: 14,
@@ -18,7 +18,7 @@ export const downloadInvoice = (data: any) => {
         },
         {
           content:
-            "Citra Saputra " +
+            "Garasi Jogja " +
             "\n Jalan Beringin" +
             "\n Pamulang, Tangerang Selatan, 15417",
           styles: {
