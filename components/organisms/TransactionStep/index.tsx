@@ -21,7 +21,7 @@ export default function TransactionStep() {
           <StepItem
             icon="step3"
             title="3. How do we help?"
-            desc1="Now, Citra Saputra is a Car Maintenance Workshop that provides Car Services with Professional Technicians."
+            desc1="Now, Garasi Jogja is a Car Maintenance Workshop that provides Car Services with Professional Technicians."
           />
         </div>
       </div>
