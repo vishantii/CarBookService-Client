@@ -14,7 +14,7 @@ export default function Navbar() {
           <ToggleMenu />
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto text-lg gap-lg-0 gap-2">
-              <Menu title="Home" active />
+              {/* <Menu title="Home" active /> */}
               <Auth />
             </ul>
           </div>
