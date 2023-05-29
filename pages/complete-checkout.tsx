@@ -277,13 +277,13 @@ export default function CompleteCheckout() {
               My Dashboard
             </a>
           </Link>
-          <a
+          {/* <a
             className="btn btn-whatsapp fw-medium text-lg color-palette-1 rounded-pill"
             href="https://wa.me/628122722895?text=Saya%20sudah%20melakukan%20pembayaran"
             role="button"
           >
             WhatsApp ke Admin
-          </a>
+          </a> */}
         </div>
       </div>
     </section>
