@@ -12,6 +12,7 @@ export default function CheckoutConfirmation() {
 
   const onSubmit = async (event: any) => {
     event.preventDefault();
+    setShowModal(false);
     setIsLoading(true); // set loading state to true
 
     const dataItemLocal = localStorage.getItem("service-form");
@@ -75,24 +76,20 @@ export default function CheckoutConfirmation() {
               sesuai dengan jadwal yang telah disepakati. Maksimal keterlambatan
               adalah <b> 5 menit. </b>
             </li>
+            <br />
             <li>
               Jika pelanggan terlambat lebih dari 5 menit, pihak bengkel akan
-              menghubungi pelanggan untuk mengkonfirmasi apakah mereka masih
-              ingin melanjutkan dengan penyerahan mobil atau membatalkan
-              perjanjian.
+              menghubungi pelanggan untuk mengkonfirmasi apakah pelanggan dapat
+              tiba di bengkel dalam waktu yang diberikan oleh pihak bengkel
             </li>
-            <li>
-              Jika pelanggan dapat dihubungi dan masih ingin melanjutkan,
-              bengkel akan menentukan apakah antrian akan dipindahkan ke urutan
-              paling akhir atau tetap menunggu hingga mobil tiba.
-            </li>
+            <br />
             <li>
               Jika pelanggan tidak dapat dihubungi dalam waktu yang wajar,
-              bengkel berhak untuk memindahkan antrian pelanggan ke urutan
-              paling akhir atau membatalkan perjanjian tanpa pemberitahuan lebih
-              lanjut.
+              bengkel berhak untuk membatalkan perjanjian tanpa pemberitahuan
+              lebih lanjut.
             </li>
           </ul>
+          <br />
           <p>
             Peraturan ini bertujuan untuk menjaga efisiensi pelayanan bengkel
             serta memastikan pengalaman yang adil bagi semua pelanggan. Dengan
