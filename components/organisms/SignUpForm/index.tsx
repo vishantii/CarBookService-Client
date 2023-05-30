@@ -48,7 +48,7 @@ export default function SignUpForm() {
         <input
           type="text"
           className="form-control rounded-pill text-lg"
-          aria-describedby="name"
+          aria-describedby="phone"
           placeholder="Enter your Phone Number"
           value={phoneNumber}
           onChange={(event) => setPhoneNumber(event.target.value)}
@@ -92,6 +92,7 @@ export default function SignUpForm() {
           type="button"
           className="btn btn-sign-up fw-medium text-lg text-white rounded-pill mb-16"
           onClick={onSubmit}
+          disabled={!name || !email || !password || !phoneNumber || !address}
         >
           Continue
         </button>
