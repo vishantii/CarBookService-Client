@@ -32,7 +32,6 @@ export default function Auth() {
   if (isLogin) {
     return (
       <li className="nav-item my-auto dropdown d-flex">
-        <div className="vertical-line d-lg-block d-none" />
         <div>
           <a
             className="dropdown-toggle ms-lg-40"
@@ -58,17 +57,11 @@ export default function Auth() {
             <li>
               <Link href="/member/transactions">
                 <a className="dropdown-item text-lg color-palette-2">
-                  My Profile
+                  My Profile & Transactions
                 </a>
               </Link>
             </li>
-            <li>
-              <Link href="/member/edit-profile">
-                <a className="dropdown-item text-lg color-palette-2" href="#">
-                  Account Settings
-                </a>
-              </Link>
-            </li>
+
             <li onClick={onLogout}>
               <a className="dropdown-item text-lg color-palette-2" href="#">
                 Log Out

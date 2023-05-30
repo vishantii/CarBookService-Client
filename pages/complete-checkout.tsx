@@ -265,7 +265,7 @@ export default function CompleteCheckout() {
           <p className="text-lg text-center color-palette-1 m-0">
             Mohon datang sesuai dengan jadwal yang sudah anda pilih
             <br />
-            maksimal keterlambatan adalah 10 menit
+            maksimal keterlambatan adalah 5 menit
           </p>
         </div>
         <div className="button-group d-flex flex-column mx-auto">
@@ -277,13 +277,13 @@ export default function CompleteCheckout() {
               My Dashboard
             </a>
           </Link>
-          <a
+          {/* <a
             className="btn btn-whatsapp fw-medium text-lg color-palette-1 rounded-pill"
             href="https://wa.me/628122722895?text=Saya%20sudah%20melakukan%20pembayaran"
             role="button"
           >
             WhatsApp ke Admin
-          </a>
+          </a> */}
         </div>
       </div>
     </section>
