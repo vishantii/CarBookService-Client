@@ -228,6 +228,18 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
       ]);
     };
 
+    const sortedSparepartData = sparepartData.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
     return (
       <>
         <select
@@ -236,7 +248,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
           value={selectedParts}
           onChange={handleSelectChange}
         >
-          {sparepartData.map((part: any) => (
+          {sortedSparepartData.map((part: any) => (
             <option
               key={part._id}
               value={part._id}
