@@ -19,8 +19,8 @@ export const downloadInvoice = (data: any) => {
         {
           content:
             "Garasi Jogja " +
-            "\n Jalan Beringin" +
-            "\n Pamulang, Tangerang Selatan, 15417",
+            "\n Jl. Salak 8 No.13" +
+            "\n Pamulang, Tangerang Selatan, 15416",
           styles: {
             halign: "right",
             fontSize: 12,
