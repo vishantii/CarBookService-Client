@@ -18,7 +18,12 @@ const className = {
   label: cx("form-label text-lg fw-medium rounded-pill color-palette-1 mb-10"),
 };
 
-export default function ServiceForm({ categoryData, sparepartData, carsData }) {
+export default function ServiceForm({
+  categoryData,
+  sparepartData,
+  carsData,
+  setShowModal,
+}) {
   const [formData, setFormData] = useState({
     miles: "",
     licensePlate: "",
@@ -45,6 +50,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
   }>({});
 
   // const timeCheck = _.isEmpty(formData.time);
+  const catCheck = _.isEmpty(catById?.name);
 
   const router = useRouter();
 
@@ -323,7 +329,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
           onChange={handleChange}
         />
       </div>
-      <div className="pt-30">
+      <div className="pt-30 ">
         <label className={className.label}>Kategori Service</label>
         <select
           name="categories"
@@ -340,6 +346,12 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
             </option>
           ))}
         </select>
+        <a
+          className="text-info font-weight-bold"
+          onClick={() => setShowModal(true)}
+        >
+          <u> Anda bingung memilih? </u>
+        </a>
       </div>
       <div className="pt-30">
         <h2 className="fw-bold text-xl color-palette-1 mb-20">
@@ -350,6 +362,7 @@ export default function ServiceForm({ categoryData, sparepartData, carsData }) {
       <div className="pt-30">
         <label className={className.label}>Pilih Tanggal Service</label>
         <DatePicker
+          disabled={catCheck}
           minDate={moment().toDate()}
           placeholderText="Pilih Tanggal"
           className="form-select rounded-pill text-lg"
