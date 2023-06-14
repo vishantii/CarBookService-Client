@@ -10,7 +10,6 @@ import {
 import { HistoryTransactionTypes } from "../../../services/data-types";
 import moment from "moment";
 import ModalDialog from "../../molecules/Modal";
-import { getServiceTime } from "../../../services/player";
 import _ from "lodash";
 
 export default function TransactionContent() {
@@ -22,6 +21,7 @@ export default function TransactionContent() {
   });
   const [tempData, setTempData] = useState("");
   const [category, setCategory] = useState({});
+  const currentDate = moment();
 
   console.log("cats-->", category);
 
@@ -157,6 +157,7 @@ export default function TransactionContent() {
                       setShowModal={setShowModal}
                       setTempData={setTempData}
                       setCategory={setCategory}
+                      currentDate={currentDate}
                     />
                   );
                 })}

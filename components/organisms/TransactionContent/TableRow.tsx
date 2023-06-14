@@ -31,6 +31,7 @@ export default function TableRow(props: any) {
     setShowModal,
     setTempData,
     setCategory,
+    currentDate,
   } = props;
 
   // const statusClass = cx({
@@ -62,6 +63,7 @@ export default function TableRow(props: any) {
               setShowModal(true);
               setCategory(category);
             }}
+            disabled={currentDate.isSame(date, "day")}
           >
             Ubah Jadwal
           </button>

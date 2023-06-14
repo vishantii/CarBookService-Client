@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import cx from "classnames";
 import { useRouter } from "next/router";
 import { CategoryTypes } from "../../../services/data-types";
-import { getCategoryById, getServiceTime } from "../../../services/player";
+import { getCategoryById } from "../../../services/player";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
