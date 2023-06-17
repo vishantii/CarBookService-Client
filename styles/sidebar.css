@@ -77,23 +77,10 @@
   padding: 0.438rem;
 }
 
-@media (min-height: 900px) {
-  .sidebar .content {
-    overflow-y: hidden;
-  }
+.sidebar.show {
+  transform: translateX(0);
 }
 
-@media (max-width: 767px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-
-  .sidebar.show {
-    transform: translateX(0);
-  }
-
-  .sidebar .content {
-    width: 80%;
-    height: 100%;
-  }
+.sidebar.hide {
+  transform: translateX(-100%);
 }
