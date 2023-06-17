@@ -41,7 +41,7 @@ export async function getTransactionDetail(id: string, token: string) {
 }
 
 export const updateProfile = async (data: any, id: string) => {
-  const url = `${ROOT_API}/${API_VERSION}/players/profile/${id}`;
+  const url = `${ROOT_API}/${API_VERSION}/customers/profile/${id}`;
   return callAPI({
     method: "PUT",
     url,

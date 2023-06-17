@@ -18,6 +18,7 @@ interface userProps {
   phoneNumber: string;
 }
 export default function EditProfile() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [user, setUser] = useState<userProps>({
     name: "",
     id: "",
@@ -56,7 +57,11 @@ export default function EditProfile() {
   return (
     <>
       <section className="edit-profile overflow-auto">
-        <SideBar activeMenu="settings" />
+        <SideBar
+          setIsSidebarOpen={setIsSidebarOpen}
+          isSidebarOpen={isSidebarOpen}
+          activeMenu="settings"
+        />
         <main className="main-wrapper">
           <div className="ps-lg-0">
             <h2 className="text-4xl fw-bold color-palette-1 mb-30">Settings</h2>

@@ -2,11 +2,17 @@ import jwtDecode from "jwt-decode";
 import SideBar from "../../components/organisms/SideBar";
 import OverviewContent from "../../components/organisms/OverviewContent";
 import { JWTPayloadTypes, UserTypes } from "../../services/data-types";
+import { useState } from "react";
 
 export default function Member() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   return (
     <section className="overview overflow-auto">
-      <SideBar activeMenu="overview" />
+      <SideBar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+        activeMenu="overview"
+      />
       <OverviewContent />
     </section>
   );
