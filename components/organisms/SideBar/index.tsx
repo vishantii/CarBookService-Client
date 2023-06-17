@@ -9,7 +9,7 @@ interface SideBarProps {
 }
 
 export default function SideBar(props: any) {
-  const { activeMenu } = props;
+  const { activeMenu, setIsSidebarOpen, isSidebarOpen } = props;
   const router = useRouter();
 
   const onLogOut = () => {
@@ -20,7 +20,7 @@ export default function SideBar(props: any) {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
-        props.setIsSidebarOpen(true);
+        setIsSidebarOpen(true);
       }
     };
 
@@ -32,7 +32,7 @@ export default function SideBar(props: any) {
   }, []);
 
   return (
-    <section className={`sidebar ${props.isSidebarOpen ? "show" : "hide"}`}>
+    <section className={`sidebar ${isSidebarOpen ? "show" : "hide"}`}>
       <div className="content pt-50 pb-30 ps-30">
         <Profile />
         <div className="menus">
