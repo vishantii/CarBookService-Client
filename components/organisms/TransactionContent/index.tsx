@@ -23,10 +23,6 @@ export default function TransactionContent() {
   const [category, setCategory] = useState({});
   const currentDate = moment();
 
-  console.log("cats-->", category);
-
-  // const [tab, setTab] = useState("all");
-
   const getMemberTransactionAPI = useCallback(async () => {
     const response = await getMemberTransactions();
     if (response.error) {
@@ -39,11 +35,6 @@ export default function TransactionContent() {
   useEffect(() => {
     getMemberTransactionAPI();
   }, [getMemberTransactions]);
-
-  // const onTabClick = (value: string) => {
-  //   setTab(value);
-  //   getMemberTransactionAPI();
-  // };
 
   const onChangeStatus = async (status?: any, id?: any) => {
     const res = await updateStatusTransaction({ status: status }, id);
@@ -103,32 +94,6 @@ export default function TransactionContent() {
         <h2 className="text-4xl fw-bold color-palette-1 mb-30">
           My Transactions
         </h2>
-        {/* <div className="row mt-30 mb-20">
-          <div className="col-lg-12 col-12 main-content">
-            <div id="list_status_title">
-              <ButtonTab
-                onClick={() => onTabClick("all")}
-                title="All Trx"
-                active={tab === "all"}
-              />
-              <ButtonTab
-                onClick={() => onTabClick("success")}
-                title="Success"
-                active={tab === "success"}
-              />
-              <ButtonTab
-                onClick={() => onTabClick("pending")}
-                title="Pending"
-                active={tab === "pending"}
-              />
-              <ButtonTab
-                onClick={() => onTabClick("failed")}
-                title="Failed"
-                active={tab === "failed"}
-              />
-            </div>
-          </div>
-        </div> */}
         <div className="latest-transaction">
           <div className="main-content main-content-table overflow-auto">
             <table className="table table-borderless">
