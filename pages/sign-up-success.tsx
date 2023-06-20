@@ -1,8 +1,12 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function SignUpSuccess() {
-  // [CODE UPDATE] saya menambahkan remove user-form disini
+  const router = useRouter();
+  const resetNavigation = () => {
+    return router.replace("/sign-in");
+  };
   useEffect(() => {
     localStorage.removeItem("user-form");
   }, []);
@@ -197,14 +201,13 @@ export default function SignUpSuccess() {
           </p>
         </div>
         <div className="button-group d-flex flex-column mx-auto">
-          <Link href="/sign-in">
-            <a
-              className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
-              role="button"
-            >
-              Ayo Servis
-            </a>
-          </Link>
+          <a
+            className="btn btn-top-up fw-medium text-lg text-white rounded-pill"
+            role="button"
+            onClick={resetNavigation}
+          >
+            Ayo Servis
+          </a>
         </div>
       </div>
     </section>
