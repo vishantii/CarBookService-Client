@@ -373,31 +373,6 @@ export default function ServiceForm({
         />
         <label className="pt-1">{`Jumlah Antrian = ${formData.queue}`}</label>
       </div>
-
-      {/* {!timeCheck ? (
-        <div className="pt-30">
-          <label className={className.label}>Waktu Service</label>
-          <select
-            name="times"
-            id="times"
-            className="form-control rounded-pill text-lg category-select p-3"
-            onChange={(event) => {
-              setFormData({
-                ...formData,
-                times: event.target.value,
-              });
-            }}
-          >
-            <option value="">Select Time</option>
-            {formData.time.map((time: any) => (
-              <option key={time._id} value={time.time}>
-                {time.available && time.time}
-              </option>
-            ))}
-          </select>
-        </div>
-      ) : null} */}
-
       <div className="pt-30">
         <label className={className.label}>Catatan</label>
         <textarea
